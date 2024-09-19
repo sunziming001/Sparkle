@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros">
+    <RootDir>$(SolutionDir)..\</RootDir>
+    <DefIncDir>$(RootDir)include\$(ProjectName)\</DefIncDir>
+    <DefLibDir>$(RootDir)libs\$(ProjectName)</DefLibDir>
+    <DefBinDir>$(RootDir)bins\</DefBinDir>
+    <DefObjDir>$(RootDir)\objs\$(ProjectName)</DefObjDir>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OutDir>$(DefBinDir)</OutDir>
+    <IntDir>$(DefObjDir)</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(DefIncDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(DefLibDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <BuildMacro Include="RootDir">
+      <Value>$(RootDir)</Value>
+    </BuildMacro>
+    <BuildMacro Include="DefIncDir">
+      <Value>$(DefIncDir)</Value>
+    </BuildMacro>
+    <BuildMacro Include="DefLibDir">
+      <Value>$(DefLibDir)</Value>
+    </BuildMacro>
+    <BuildMacro Include="DefBinDir">
+      <Value>$(DefBinDir)</Value>
+    </BuildMacro>
+    <BuildMacro Include="DefObjDir">
+      <Value>$(DefObjDir)</Value>
+    </BuildMacro>
+  </ItemGroup>
+</Project>

@@ -33,9 +33,9 @@
 
 
 # Outputs
-bins\
-objs\
+bins/
+objs/
 
 # VisualStudio
-.vs\
+.vs/
 *.user
