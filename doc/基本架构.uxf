@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>60</x>
+      <y>40</y>
+      <w>650</w>
+      <h>450</h>
+    </coordinates>
+    <panel_attributes>Sparkle
+--
+bg=orange</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>80</x>
+      <y>310</y>
+      <w>550</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>Driver
+bg=blue
+layer=2</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>80</x>
+      <y>400</y>
+      <w>100</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>Screen
+bg=blue
+layer=2</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>190</x>
+      <y>400</y>
+      <w>100</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>Sound
+bg=blue
+layer=2</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>300</x>
+      <y>400</y>
+      <w>100</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>Input
+bg=blue
+layer=2</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>410</x>
+      <y>400</y>
+      <w>100</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>Disk
+bg=blue
+layer=2</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>80</x>
+      <y>210</y>
+      <w>550</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>Nodes
+bg=blue
+layer=2</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>520</x>
+      <y>400</y>
+      <w>110</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>Network
+bg=blue
+layer=2</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>80</x>
+      <y>80</y>
+      <w>550</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>Scenes
+bg=blue
+layer=2</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
