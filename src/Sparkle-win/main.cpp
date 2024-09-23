@@ -1,6 +1,7 @@
 #include <iostream>
 #include "SSharedPtr.h"
-
+#include "SString.h"
+#include <string>
 
 class Base
 {
@@ -58,12 +59,16 @@ void test(SShardPtr<Base> ptr)
 
 int main(int argc, char** argv)
 {
-	std::cout << "Hello World" << std::endl;
 	{
 
 		SShardPtr<Base> ptr1 = new Child(7);
 		SShardPtr<Base> ptr2 = ptr1;
 		test(ptr2);
+
+		if (ptr1)
+		{
+			std::cout << "!" << std::endl;
+		}
 
 	}
 

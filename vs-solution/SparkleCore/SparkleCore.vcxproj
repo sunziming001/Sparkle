@@ -143,11 +143,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\include\SparkleCore\SByteArray.h" />
     <ClInclude Include="..\..\include\SparkleCore\SConfig.h" />
     <ClInclude Include="..\..\include\SparkleCore\SSharedPtr.h" />
+    <ClInclude Include="..\..\include\SparkleCore\SString.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\SparkleCore\SByteArray.cpp" />
     <ClCompile Include="..\..\src\SparkleCore\SConfig.cpp" />
+    <ClCompile Include="..\..\src\SparkleCore\SString.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
