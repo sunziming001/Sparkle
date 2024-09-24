@@ -7,23 +7,24 @@
 typedef uint32_t RefCntType;
 
 template<class T>
-class SShardPtr {
+class SSharedPtr {
 public:
-	SShardPtr(T* ptr)
+	using element_type = T;
+	SSharedPtr(T* ptr)
 	{
 		ptr_ = ptr;
 		refCntPtr_ = new RefCntType;
 		*refCntPtr_ = 1;
 	}
 
-	SShardPtr()
+	SSharedPtr()
 	{
 		ptr_ = nullptr;
 		refCntPtr_ = new RefCntType;
 		*refCntPtr_ = 0;
 	}
 
-	SShardPtr(const SShardPtr& _other)
+	SSharedPtr(const SSharedPtr& _other)
 	{
 		ptr_ = _other.ptr_;
 		refCntPtr_ = _other.refCntPtr_;
@@ -31,7 +32,16 @@ public:
 		(*refCntPtr_)++;
 	}
 
-	~SShardPtr()
+	
+	SSharedPtr(T* ptr, RefCntType *refCntPtr)
+	{
+		ptr_ = ptr;
+		refCntPtr_ = refCntPtr;
+
+		(*refCntPtr_)++;
+	}
+
+	~SSharedPtr()
 	{
 		(*refCntPtr_)--;
 		if (*refCntPtr_ == 0)
@@ -44,16 +54,18 @@ public:
 		}
 	}
 
-	SShardPtr operator=(const SShardPtr& _other)
+	SSharedPtr& operator=(const SSharedPtr& _other)
 	{
-		SShardPtr ret(_other);
+		ptr_ = _other.ptr_;
+		refCntPtr_ = _other.refCntPtr_;
 
-		return ret;
+		(*refCntPtr_)++;
+		return *this;
 	}
 
-	SShardPtr operator=(T* ptr)
+	SSharedPtr operator=(T* ptr)
 	{
-		SShardPtr ret(ptr);
+		SSharedPtr ret(ptr);
 
 		return ret;
 	}
@@ -69,7 +81,7 @@ public:
 	}
 
 
-	bool operator==(const SShardPtr& _other)
+	bool operator==(const SSharedPtr& _other)
 	{
 		return this->ptr_ == _other->ptr_;
 	}
@@ -84,9 +96,26 @@ public:
 		return this->ptr_;
 	}
 
+	RefCntType* getRefCntPtr()const
+	{
+		return this->refCntPtr_;
+	}
 private:
 	T* ptr_;
 	RefCntType* refCntPtr_;
 };
+
+
+template<class ChildClz, class BaseClz>
+SSharedPtr<ChildClz> spk_dynamic_pointer_cast(SSharedPtr<BaseClz> _Other)
+{
+	ChildClz *_Ptr = dynamic_cast<ChildClz*>(_Other.getPtr());
+	SSharedPtr<ChildClz> ret;
+	if (_Ptr)
+	{
+		ret = SSharedPtr<ChildClz>(_Ptr, _Other.getRefCntPtr());
+	}
+	return ret;
+}
 
 #endif

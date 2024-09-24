@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="头文件\events">
+      <UniqueIdentifier>{93ad092f-e148-4c72-932e-bcc91adf2736}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\events">
+      <UniqueIdentifier>{d702d23f-584f-42b4-ae26-818ce6ba97a7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\SparkleCore\SSharedPtr.h">
@@ -36,6 +42,15 @@
     <ClInclude Include="..\..\include\SparkleCore\SWindow_MS_OpenGL.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\SparkleCore\SEvent.h">
+      <Filter>头文件\events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\SparkleCore\SActiveEvent.h">
+      <Filter>头文件\events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\SparkleCore\SCoreApplication.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\SparkleCore\SConfig.cpp">
@@ -51,6 +66,15 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\SparkleCore\SWindow_MS_OpenGL.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\SparkleCore\SEvent.cpp">
+      <Filter>源文件\events</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\SparkleCore\SActiveEvent.cpp">
+      <Filter>源文件\events</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\SparkleCore\SCoreApplication.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

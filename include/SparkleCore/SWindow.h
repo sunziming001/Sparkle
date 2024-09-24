@@ -4,6 +4,8 @@
 #include "SConfig.h"
 #include "SString.h"
 #include "SSize.h"
+#include "SSharedPtr.h"
+#include "SEvent.h"
 
 typedef struct SWindowConf
 {
@@ -19,6 +21,7 @@ public:
 	SWindow(const SWindowConf& conf);
 	virtual ~SWindow();
 	SWindowConf getConf()const;
+	void sendEvent(SSharedPtr<SEvent> e);
 
 	virtual void resize(const SSize2D& size);
 	virtual void runOnce();

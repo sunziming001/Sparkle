@@ -17,6 +17,10 @@ private:
 	bool createGLWindow();
 	void killGLWindow();
 	static LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
+
+	void procWindowMessage(UINT uMsg, WPARAM wParam, LPARAM lParam);
+	void sendActiveEvent(WPARAM wParam, LPARAM lParam);
+
 private:
 	DECLARE_INNER_DATA(d_)
 };

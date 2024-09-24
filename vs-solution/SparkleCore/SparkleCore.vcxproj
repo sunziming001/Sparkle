@@ -143,8 +143,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\include\SparkleCore\SActiveEvent.h" />
     <ClInclude Include="..\..\include\SparkleCore\SByteArray.h" />
     <ClInclude Include="..\..\include\SparkleCore\SConfig.h" />
+    <ClInclude Include="..\..\include\SparkleCore\SCoreApplication.h" />
+    <ClInclude Include="..\..\include\SparkleCore\SEvent.h" />
     <ClInclude Include="..\..\include\SparkleCore\SSharedPtr.h" />
     <ClInclude Include="..\..\include\SparkleCore\SSize.h" />
     <ClInclude Include="..\..\include\SparkleCore\SString.h" />
@@ -152,8 +155,11 @@
     <ClInclude Include="..\..\include\SparkleCore\SWindow_MS_OpenGL.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\SparkleCore\SActiveEvent.cpp" />
     <ClCompile Include="..\..\src\SparkleCore\SByteArray.cpp" />
     <ClCompile Include="..\..\src\SparkleCore\SConfig.cpp" />
+    <ClCompile Include="..\..\src\SparkleCore\SCoreApplication.cpp" />
+    <ClCompile Include="..\..\src\SparkleCore\SEvent.cpp" />
     <ClCompile Include="..\..\src\SparkleCore\SString.cpp" />
     <ClCompile Include="..\..\src\SparkleCore\SWindow.cpp" />
     <ClCompile Include="..\..\src\SparkleCore\SWindow_MS_OpenGL.cpp" />

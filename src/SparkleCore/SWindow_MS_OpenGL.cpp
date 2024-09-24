@@ -3,6 +3,10 @@
 #include <windows.h>                              // Header File For Windows
 #include <gl\gl.h>                                // Header File For The OpenGL32 Library
 #include <gl\glu.h>                               // Header File For The GLu32 Library
+#include <iostream>
+#include <map>
+
+#include "SActiveEvent.h"
 
 #pragma comment(lib,"opengl32.lib")
 #pragma comment(lib,"glu32.lib")
@@ -18,13 +22,17 @@ struct SWindow_MS_OpenGL::Data
 	bool    active = TRUE;        // Window Active Flag Set To TRUE By Default
 	bool    fullscreen = TRUE;    // Fullscreen Flag Set To Fullscreen Mode By Default
 };
-
+static std::map<HWND, SWindow_MS_OpenGL*> gMapHWnd2SWindow_MS_OpenGL;
 
 SWindow_MS_OpenGL::SWindow_MS_OpenGL(const SWindowConf& conf)
 	:SWindow(conf)
 	,d_(new Data())
 {
 	createGLWindow();
+	if (d_->hWnd)
+	{
+		gMapHWnd2SWindow_MS_OpenGL[d_->hWnd] = this;
+	}
 }
 
 SWindow_MS_OpenGL::~SWindow_MS_OpenGL()
@@ -274,5 +282,33 @@ LRESULT CALLBACK SWindow_MS_OpenGL::WndProc(HWND hWnd,
 	WPARAM wParam, 
 	LPARAM lParam)
 {
+	auto iter = gMapHWnd2SWindow_MS_OpenGL.find(hWnd);
+	SWindow_MS_OpenGL* window = nullptr;
+	if (iter != gMapHWnd2SWindow_MS_OpenGL.end())
+	{
+		window = iter->second;
+		window->procWindowMessage(uMsg, wParam, lParam);
+	}
+	
 	return DefWindowProcW(hWnd, uMsg, wParam, lParam);
+}
+
+
+void SWindow_MS_OpenGL::procWindowMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
+{
+	switch (uMsg)
+	{
+	case WM_ACTIVATE:
+		sendActiveEvent(wParam, lParam);
+		break;
+	default:
+		break;
+	}
+}
+
+void SWindow_MS_OpenGL::sendActiveEvent(WPARAM wParam, LPARAM lParam)
+{
+	WORD fActive = LOWORD(wParam);
+	SSharedPtr<SEvent> e = new SActiveEvent(fActive != 0);
+	sendEvent(e);
 }
