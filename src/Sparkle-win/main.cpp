@@ -2,74 +2,22 @@
 #include "SSharedPtr.h"
 #include "SString.h"
 #include <string>
-
-class Base
-{
-public:
-	Base(int val)
-		:val_(val)
-	{
-
-	}
-
-	virtual ~Base()
-	{
-
-	}
-
-	int getVal()const
-	{
-		return val_;
-	}
-
-	virtual void print()
-	{
-		std::cout << val_ << std::endl;
-	}
-private:
-	int val_;
-};
-
-class Child:public Base
-{
-public:
-	Child(int val)
-		:Base(val)
-	{
-
-	}
-
-	virtual ~Child()
-	{
-
-	}
-	virtual void print()
-	{
-		std::cout << "value is " << getVal() << std::endl;
-	}
-
-};
-
-
-void test(SShardPtr<Base> ptr)
-{
-	ptr->print();
-}
-
+#include "SWindow_MS_OpenGL.h"
 
 int main(int argc, char** argv)
 {
+	SWindowConf conf = {
+		{800,600},
+		"TestWindow",
+		false,
+		32
+	};
+
+
+	SWindow_MS_OpenGL window(conf);
+	while (true)
 	{
-
-		SShardPtr<Base> ptr1 = new Child(7);
-		SShardPtr<Base> ptr2 = ptr1;
-		test(ptr2);
-
-		if (ptr1)
-		{
-			std::cout << "!" << std::endl;
-		}
-
+		window.runOnce();
 	}
 
 	return 0;

@@ -11,5 +11,6 @@
 
 #endif
 
+#define DECLARE_INNER_DATA(name) struct Data; struct Data* name = nullptr;
 
 #endif

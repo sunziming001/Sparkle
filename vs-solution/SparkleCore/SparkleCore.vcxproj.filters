@@ -27,6 +27,15 @@
     <ClInclude Include="..\..\include\SparkleCore\SString.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\SparkleCore\SWindow.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\SparkleCore\SSize.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\SparkleCore\SWindow_MS_OpenGL.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\SparkleCore\SConfig.cpp">
@@ -36,6 +45,12 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\SparkleCore\SString.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\SparkleCore\SWindow.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\SparkleCore\SWindow_MS_OpenGL.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

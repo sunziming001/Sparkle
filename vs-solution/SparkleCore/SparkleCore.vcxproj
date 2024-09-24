@@ -146,12 +146,17 @@
     <ClInclude Include="..\..\include\SparkleCore\SByteArray.h" />
     <ClInclude Include="..\..\include\SparkleCore\SConfig.h" />
     <ClInclude Include="..\..\include\SparkleCore\SSharedPtr.h" />
+    <ClInclude Include="..\..\include\SparkleCore\SSize.h" />
     <ClInclude Include="..\..\include\SparkleCore\SString.h" />
+    <ClInclude Include="..\..\include\SparkleCore\SWindow.h" />
+    <ClInclude Include="..\..\include\SparkleCore\SWindow_MS_OpenGL.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\SparkleCore\SByteArray.cpp" />
     <ClCompile Include="..\..\src\SparkleCore\SConfig.cpp" />
     <ClCompile Include="..\..\src\SparkleCore\SString.cpp" />
+    <ClCompile Include="..\..\src\SparkleCore\SWindow.cpp" />
+    <ClCompile Include="..\..\src\SparkleCore\SWindow_MS_OpenGL.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
