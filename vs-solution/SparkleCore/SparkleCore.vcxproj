@@ -148,6 +148,8 @@
     <ClInclude Include="..\..\include\SparkleCore\SConfig.h" />
     <ClInclude Include="..\..\include\SparkleCore\SCoreApplication.h" />
     <ClInclude Include="..\..\include\SparkleCore\SEvent.h" />
+    <ClInclude Include="..\..\include\SparkleCore\SFlags.h" />
+    <ClInclude Include="..\..\include\SparkleCore\SKeyboardEvent.h" />
     <ClInclude Include="..\..\include\SparkleCore\SSharedPtr.h" />
     <ClInclude Include="..\..\include\SparkleCore\SSize.h" />
     <ClInclude Include="..\..\include\SparkleCore\SString.h" />

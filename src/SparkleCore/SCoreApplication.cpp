@@ -8,6 +8,7 @@ struct SCoreApplication::Data
 	int argc;
 	char** argv;
 	SWindow* mainWindow;
+	bool keepRun;
 };
 
 SCoreApplication* SCoreApplication::instance=nullptr;
@@ -18,6 +19,7 @@ SCoreApplication::SCoreApplication(int argc, char** argv)
 {
 	d_->argc = argc;
 	d_->argv = argv;
+	
 	if (instance == nullptr)
 	{
 		instance = this;
@@ -31,7 +33,8 @@ SCoreApplication::~SCoreApplication()
 
 void SCoreApplication::exec()
 {
-	while (true)
+	d_->keepRun = true;
+	while (d_->keepRun)
 	{
 		if (d_->mainWindow)
 		{
@@ -64,6 +67,11 @@ void SCoreApplication::registerMainWindow(SWindow* window)
 		d_->mainWindow = window;
 	}
 	
+}
+
+void SCoreApplication::quit()
+{
+	d_->keepRun = false;
 }
 
 void SCoreApplication::onActiveEvent(SSharedPtr<SActiveEvent> e)

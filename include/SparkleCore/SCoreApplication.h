@@ -16,6 +16,7 @@ public:
 	static SCoreApplication* getInstance();
 	void recvEvent(SSharedPtr<SEvent> e);
 	void registerMainWindow(SWindow* window);
+	void quit();
 protected:
 	virtual void onActiveEvent(SSharedPtr<SActiveEvent> e);
 private:
