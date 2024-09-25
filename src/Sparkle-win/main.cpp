@@ -18,10 +18,7 @@ int main(int argc, char** argv)
 	SWindow_MS_OpenGL window(conf);
 	app.exec();
 
-	while (true)
-	{
-		window.runOnce();
-	}
+	
 
 	return 0;
 }

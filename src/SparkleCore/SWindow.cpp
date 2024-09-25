@@ -4,7 +4,7 @@
 SWindow::SWindow(const SWindowConf& conf)
 	:conf_(conf)
 {
-
+	SCoreApplication::getInstance()->registerMainWindow(this);
 }
 
 SWindow::~SWindow()

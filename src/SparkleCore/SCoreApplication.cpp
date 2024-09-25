@@ -7,6 +7,7 @@ struct SCoreApplication::Data
 {
 	int argc;
 	char** argv;
+	SWindow* mainWindow;
 };
 
 SCoreApplication* SCoreApplication::instance=nullptr;
@@ -30,7 +31,13 @@ SCoreApplication::~SCoreApplication()
 
 void SCoreApplication::exec()
 {
-	
+	while (true)
+	{
+		if (d_->mainWindow)
+		{
+			d_->mainWindow->runOnce();
+		}
+	}
 }
 
 SCoreApplication* SCoreApplication::getInstance()
@@ -48,6 +55,15 @@ void SCoreApplication::recvEvent(SSharedPtr<SEvent> e)
 	default:
 		break;
 	}
+}
+
+void SCoreApplication::registerMainWindow(SWindow* window)
+{
+	if (d_->mainWindow == nullptr)
+	{
+		d_->mainWindow = window;
+	}
+	
 }
 
 void SCoreApplication::onActiveEvent(SSharedPtr<SActiveEvent> e)

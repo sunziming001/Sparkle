@@ -5,7 +5,7 @@
 #include "SSharedPtr.h"
 #include "SEvent.h"
 #include "SActiveEvent.h"
-
+#include "SWindow.h"
 
 class SPARKLE_API SCoreApplication
 {
@@ -15,6 +15,7 @@ public:
 	void exec();
 	static SCoreApplication* getInstance();
 	void recvEvent(SSharedPtr<SEvent> e);
+	void registerMainWindow(SWindow* window);
 protected:
 	virtual void onActiveEvent(SSharedPtr<SActiveEvent> e);
 private:
