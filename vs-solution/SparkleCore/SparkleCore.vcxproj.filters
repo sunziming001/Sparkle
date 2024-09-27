@@ -57,6 +57,9 @@
     <ClInclude Include="..\..\include\SparkleCore\SFlags.h">
       <Filter>头文件\events</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\SparkleCore\SLoggable.h">
+      <Filter>头文件\events</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\SparkleCore\SConfig.cpp">
@@ -82,6 +85,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\SparkleCore\SCoreApplication.cpp">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\SparkleCore\SKeyboardEvent.cpp">
+      <Filter>源文件\events</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

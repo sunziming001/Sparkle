@@ -2,6 +2,7 @@
 #include "SSharedPtr.h"
 #include "SWindow.h"
 #include "SWindow_MS_OpenGL.h"
+#include <iostream>
 
 struct SCoreApplication::Data
 {
@@ -50,10 +51,14 @@ SCoreApplication* SCoreApplication::getInstance()
 
 void SCoreApplication::recvEvent(SSharedPtr<SEvent> e)
 {
+	std::cout<< e->toLogString()->toUtf8().data()<<std::endl;
 	switch (e->getEventType())
 	{
 	case SEventType::Active:
 		onActiveEvent(spk_dynamic_pointer_cast<SActiveEvent>(e));
+		break;
+	case SEventType::Keyboard:
+		onKeyboardEvent(spk_dynamic_pointer_cast<SKeyboardEvent>(e));
 		break;
 	default:
 		break;
@@ -75,6 +80,11 @@ void SCoreApplication::quit()
 }
 
 void SCoreApplication::onActiveEvent(SSharedPtr<SActiveEvent> e)
+{
+
+}
+
+void SCoreApplication::onKeyboardEvent(SSharedPtr<SKeyboardEvent> e)
 {
 
 }

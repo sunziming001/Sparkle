@@ -3,6 +3,7 @@
 
 #include "SConfig.h"
 #include "SEvent.h"
+#include "SFlags.h"
 
 enum class SKeyboardStatus
 {
@@ -90,8 +91,27 @@ enum class SKeyboardKey
 	Key_F11,
 	Key_F12,
 
+	Key_Shift,
+	Key_Ctrl,
+	Key_Alt,
+
 };
 
+
+class SPARKLE_API SKeyboardEvent :public SEvent
+{
+public:
+	SKeyboardEvent(SKeyboardKey key,
+		SKeyboardStatus status,
+		SFlags<SKeyboardModifier> modifiers);
+	virtual ~SKeyboardEvent();
+	SKeyboardKey getKey()const;
+	SFlags<SKeyboardModifier> getModifiers()const;
+	SKeyboardStatus getStatus()const;
+private:
+	DECLARE_INNER_DATA(d_);
+
+};
 
 
 #endif

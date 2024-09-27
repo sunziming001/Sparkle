@@ -57,11 +57,20 @@ public:
 		return ret;
 	}
 
+	SFlags operator!()
+	{
+		SFlags ret;
+		ret.value_ = !(this->value_);
+
+		return ret;
+	}
+
 	SFlags& operator&=(const SFlags& _other)
 	{
 		this->value_ &= _other.value_;
 		return *this;
 	}
+
 
 	explicit operator bool()
 	{

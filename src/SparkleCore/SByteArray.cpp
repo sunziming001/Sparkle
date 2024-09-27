@@ -2,7 +2,7 @@
 #include <algorithm>
 
 SByteArray::SByteArray(size_t size/*= DEFAULT_BYTE_ARRAY_SIZE*/)
-	:ptr_(new SByte[size])
+	:ptr_(size==0? nullptr : new SByte[size])
 	,size_(size)
 {
 
@@ -37,12 +37,9 @@ SByteSize SByteArray::size() const
 	return size_;
 }
 
-void SByteArray::cleanup()
-{
-	delete[] ptr_;
-}
 
-const SByteArray& SByteArray::operator=(const SByteArray& _other)
+
+SByteArray& SByteArray::operator=(const SByteArray& _other)
 {
 	cleanup();
 	ptr_ = new SByte[_other.size()];
@@ -50,4 +47,55 @@ const SByteArray& SByteArray::operator=(const SByteArray& _other)
 	memcpy(ptr_, _other.data(), _other.size());
 
 	return *this;
+}
+
+
+SByteArray SByteArray::operator+(const SByteArray& _other)
+{
+	SByteArray ret(size()+_other.size());
+
+	memcpy(ret.ptr_, this->ptr_, size());
+	memcpy(ret.ptr_ + size(), _other.data(), _other.size());
+
+	return ret;
+}
+
+
+SByteArray& SByteArray::operator+=(const SByteArray& _other)
+{
+	SByte* newPtr = new SByte[size() + _other.size()];
+
+	if (ptr_)
+	{
+		memcpy(newPtr, this->ptr_, size());
+	}
+	
+	memcpy(newPtr + size(), _other.data(), _other.size());
+
+	delete[] this->ptr_;
+
+	this->ptr_ = newPtr;
+	this->size_ += _other.size();
+
+	return *this;
+}
+
+SByteArray& SByteArray::operator-=(size_t size)
+{
+	if (size <= size_)
+	{
+		size_ -= size;
+
+		SByte* newPtr = new SByte[size_];
+		memcpy(newPtr, this->ptr_, size_);
+
+		delete[] this->ptr_;
+		this->ptr_ = newPtr;
+	}
+	return *this;
+}
+
+void SByteArray::cleanup()
+{
+	delete[] ptr_;
 }

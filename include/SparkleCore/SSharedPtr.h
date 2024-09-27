@@ -54,6 +54,11 @@ public:
 		}
 	}
 
+	T& operator*()
+	{
+		return *ptr_;
+	}
+
 	SSharedPtr& operator=(const SSharedPtr& _other)
 	{
 		ptr_ = _other.ptr_;

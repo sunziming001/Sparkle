@@ -2,6 +2,8 @@
 #define _SEVENT_H
 
 #include "SConfig.h"
+#include "SString.h"
+#include "SLoggable.h"
 
 enum class SPARKLE_API SEventType
 {
@@ -13,14 +15,18 @@ enum class SPARKLE_API SEventType
 	Keyboard,
 };
 
-class SPARKLE_API SEvent
+class SPARKLE_API SEvent:public SLoggable
 {
 public:
 	SEvent(const SEventType& type);
 	virtual ~SEvent();
 	SEventType getEventType()const;
+	virtual SStringPtr toLogString()const;
+	uint32_t getId()const;
+
+	static SStringPtr EventTypeToString(SEventType tp);
 private:
-	SEventType type_;
+	DECLARE_INNER_DATA(d_);
 };
 
 #endif
