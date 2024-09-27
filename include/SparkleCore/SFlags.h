@@ -71,6 +71,10 @@ public:
 		return *this;
 	}
 
+	uint32_t getValue()
+	{
+		return value_;
+	}
 
 	explicit operator bool()
 	{

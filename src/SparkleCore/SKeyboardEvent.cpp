@@ -39,3 +39,16 @@ SKeyboardStatus SKeyboardEvent::getStatus() const
 {
 	return d_->status;
 }
+
+SStringPtr SKeyboardEvent::toLogString() const
+{
+	SStringPtr ret = SEvent::toLogString();
+	(*ret) << SWS("{");
+	(*ret) << "key: " << static_cast<uint32_t>(d_->key) << ";";
+	(*ret) << "status: " << static_cast<uint32_t>(d_->status) << ";";
+	(*ret) << "modifiers: " << static_cast<uint32_t>(d_->modifiers.getValue()) << ";";
+	
+	(*ret) << SWS("}");
+
+	return ret;
+}

@@ -11,6 +11,7 @@ public:
 	SActiveEvent(bool isActive);
 	virtual ~SActiveEvent();
 	bool getIsActive();
+	SStringPtr toLogString()const override;
 private:
 	bool isActive_;
 };

@@ -21,7 +21,7 @@ public:
 	SEvent(const SEventType& type);
 	virtual ~SEvent();
 	SEventType getEventType()const;
-	virtual SStringPtr toLogString()const;
+	SStringPtr toLogString()const override;
 	uint32_t getId()const;
 
 	static SStringPtr EventTypeToString(SEventType tp);

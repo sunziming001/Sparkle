@@ -108,6 +108,8 @@ public:
 	SKeyboardKey getKey()const;
 	SFlags<SKeyboardModifier> getModifiers()const;
 	SKeyboardStatus getStatus()const;
+
+	SStringPtr toLogString()const override;
 private:
 	DECLARE_INNER_DATA(d_);
 

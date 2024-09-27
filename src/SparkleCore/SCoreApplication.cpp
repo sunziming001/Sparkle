@@ -51,13 +51,14 @@ SCoreApplication* SCoreApplication::getInstance()
 
 void SCoreApplication::recvEvent(SSharedPtr<SEvent> e)
 {
-	std::cout<< e->toLogString()->toUtf8().data()<<std::endl;
+	
 	switch (e->getEventType())
 	{
 	case SEventType::Active:
 		onActiveEvent(spk_dynamic_pointer_cast<SActiveEvent>(e));
 		break;
 	case SEventType::Keyboard:
+		std::cout << e->toLogString()->toUtf8().data() << std::endl;
 		onKeyboardEvent(spk_dynamic_pointer_cast<SKeyboardEvent>(e));
 		break;
 	default:

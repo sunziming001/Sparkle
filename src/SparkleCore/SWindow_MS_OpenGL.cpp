@@ -307,8 +307,13 @@ void SWindow_MS_OpenGL::procWindowMessage(UINT uMsg, WPARAM wParam, LPARAM lPara
 		onActive(wParam, lParam);
 		break;
 	case WM_KEYDOWN:
-		onKeyDown(wParam, lParam);
 	case WM_KEYUP:
+	case WM_SYSKEYDOWN:
+	case WM_SYSKEYUP:
+		onKey(uMsg, wParam, lParam);
+		break;
+		onKeyDown(wParam, lParam);
+	
 		onKeyUp( wParam, lParam);
 		break;
 	default:
@@ -323,25 +328,48 @@ void SWindow_MS_OpenGL::onActive(WPARAM wParam, LPARAM lParam)
 	sendEvent(e);
 }
 
-void SWindow_MS_OpenGL::onKeyDown(WPARAM wParam, LPARAM lParam)
+void SWindow_MS_OpenGL::onKey(UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-	SKeyboardKey key = getKeyboardKey(wParam);
-	
+	WORD vkCode = LOWORD(wParam);                                 // virtual-key code
+
+	WORD keyFlags = HIWORD(lParam);
+
+	WORD scanCode = LOBYTE(keyFlags);                             // scan code
+	BOOL isExtendedKey = (keyFlags & KF_EXTENDED) == KF_EXTENDED; // extended-key flag, 1 if scancode has 0xE0 prefix
+
+	if (isExtendedKey)
+		scanCode = MAKEWORD(scanCode, 0xE0);
+
+	BOOL wasKeyDown = (keyFlags & KF_REPEAT) == KF_REPEAT;        // previous key-state flag, 1 on autorepeat
+	WORD repeatCount = LOWORD(lParam);                            // repeat count, > 0 if several keydown messages was combined into one message
+
+	BOOL isKeyReleased = (keyFlags & KF_UP) == KF_UP;             // transition-state flag, 1 on keyup
+
+	// if we want to distinguish these keys:
+	/*switch (vkCode)
+	{
+	case VK_SHIFT:   // converts to VK_LSHIFT or VK_RSHIFT
+	case VK_CONTROL: // converts to VK_LCONTROL or VK_RCONTROL
+	case VK_MENU:    // converts to VK_LMENU or VK_RMENU
+		vkCode = LOWORD(MapVirtualKeyW(scanCode, MAPVK_VSC_TO_VK_EX));
+		break;
+	}*/
+
+	SKeyboardKey key = getKeyboardKey(vkCode);
 	if (key != SKeyboardKey::None)
 	{
-		onKeyboardKeyDown(key);
+		if (isKeyReleased)
+		{
+			onKeyboardKeyUp(key);
+		}
+		else if (!wasKeyDown)
+		{
+			onKeyboardKeyDown(key);
+		}
 	}
+
 }
 
-void SWindow_MS_OpenGL::onKeyUp(WPARAM wParam, LPARAM lParam)
-{
-	SKeyboardKey key = getKeyboardKey(wParam);
-
-	if (key != SKeyboardKey::None)
-	{
-		onKeyboardKeyUp(key);
-	}
-}
 
 void SWindow_MS_OpenGL::onKeyboardKeyDown(SKeyboardKey key)
 {
