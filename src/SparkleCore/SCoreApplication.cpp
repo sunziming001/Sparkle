@@ -3,6 +3,7 @@
 #include "SWindow.h"
 #include "SWindow_MS_OpenGL.h"
 #include <iostream>
+#include "SLogger.h"
 
 struct SCoreApplication::Data
 {
@@ -18,6 +19,9 @@ SCoreApplication* SCoreApplication::instance=nullptr;
 SCoreApplication::SCoreApplication(int argc, char** argv)
 	:d_(new Data())
 {
+	SLoggerManager* logger = SLoggerManager::getInstance();
+	logger->init();
+
 	d_->argc = argc;
 	d_->argv = argv;
 	
@@ -25,15 +29,18 @@ SCoreApplication::SCoreApplication(int argc, char** argv)
 	{
 		instance = this;
 	}
+	SInfo("App") << SWS("App Inited");
 }
 
 SCoreApplication::~SCoreApplication()
 {
 	delete d_;
+	SInfo("App") << SWS("App Destroyed");
 }
 
 void SCoreApplication::exec()
 {
+	SInfo("App") << SWS("App start loop...");
 	d_->keepRun = true;
 	while (d_->keepRun)
 	{
@@ -51,14 +58,13 @@ SCoreApplication* SCoreApplication::getInstance()
 
 void SCoreApplication::recvEvent(SSharedPtr<SEvent> e)
 {
-	
+	STrace("App") << e->toLogString();
 	switch (e->getEventType())
 	{
 	case SEventType::Active:
 		onActiveEvent(spk_dynamic_pointer_cast<SActiveEvent>(e));
 		break;
 	case SEventType::Keyboard:
-		std::cout << e->toLogString()->toUtf8().data() << std::endl;
 		onKeyboardEvent(spk_dynamic_pointer_cast<SKeyboardEvent>(e));
 		break;
 	default:

@@ -4,10 +4,11 @@
 #include <string>
 #include "SWindow_MS_OpenGL.h"
 #include "SCoreApplication.h"
-
+#include "SLogger.h"
 
 int main(int argc, char** argv)
 {
+
 
 	SWindowConf conf = {
 		{800,600},

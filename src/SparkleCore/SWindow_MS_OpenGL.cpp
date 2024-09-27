@@ -306,16 +306,14 @@ void SWindow_MS_OpenGL::procWindowMessage(UINT uMsg, WPARAM wParam, LPARAM lPara
 	case WM_ACTIVATE:
 		onActive(wParam, lParam);
 		break;
+
 	case WM_KEYDOWN:
 	case WM_KEYUP:
 	case WM_SYSKEYDOWN:
 	case WM_SYSKEYUP:
 		onKey(uMsg, wParam, lParam);
 		break;
-		onKeyDown(wParam, lParam);
-	
-		onKeyUp( wParam, lParam);
-		break;
+
 	default:
 		break;
 	}
