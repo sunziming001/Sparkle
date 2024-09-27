@@ -30,6 +30,7 @@ public:
 	SString(const SString& str);
 	~SString();
 
+	SString& operator=(const SString& str);
 	SString& operator=(const char* utf8Str);
 	SString& operator=(const wchar_t* unicodeStr);
 

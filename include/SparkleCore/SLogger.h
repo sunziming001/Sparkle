@@ -15,11 +15,15 @@ enum class SLoggerLevel
 
 struct SLoggerConf
 {
-	SString path=SWS("./log/game/");
-	SString name=SWS("sparkle");
-	int maxFileCnt = 5;
+	SString path;
+	SString name;
+	int maxFileCnt;
 	SString logPath;
-	SLoggerLevel maxLoggerLevel = SLoggerLevel::Info;
+	SLoggerLevel maxLoggerLevel;
+	
+	SLoggerConf();
+	SLoggerConf(const SLoggerConf& conf);
+	SLoggerConf&  operator=(const SLoggerConf& conf);
 };
 
 class SPARKLE_API SLoggerManager

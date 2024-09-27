@@ -6,6 +6,34 @@
 #include <iostream>
 #include <fstream>
 
+
+SLoggerConf::SLoggerConf(const SLoggerConf& conf)
+{
+	path = conf.path;
+	name = conf.name;
+	maxFileCnt = conf.maxFileCnt;
+	logPath = conf.logPath;
+	maxLoggerLevel = conf.maxLoggerLevel;
+}
+
+SLoggerConf::SLoggerConf()
+{
+	path = SWS("./log/game/");
+	name = SWS("sparkle");
+	maxFileCnt = 5;
+	maxLoggerLevel = SLoggerLevel::Info;
+}
+
+SLoggerConf& SLoggerConf::operator=(const SLoggerConf& conf)
+{
+	path = conf.path;
+	name = conf.name;
+	maxFileCnt = conf.maxFileCnt;
+	logPath = conf.logPath;
+	maxLoggerLevel = conf.maxLoggerLevel;
+	return *this;
+}
+
 struct SLoggerManager::Data
 {
 	SLoggerConf conf;
@@ -171,3 +199,4 @@ SLogger& SLogger::operator<<(const SString& line)
 	mgr->writeLog(lv_, tagLine);
 	return *this;
 }
+

@@ -22,6 +22,7 @@ private:
 	void procWindowMessage(UINT uMsg, WPARAM wParam, LPARAM lParam);
 	void onActive(WPARAM wParam, LPARAM lParam);
 	void onKey(UINT uMsg, WPARAM wParam, LPARAM lParam);
+	void onMouseMove(WPARAM wParam, LPARAM lParam);
 
 	void onKeyboardKeyDown(SKeyboardKey key);
 	void onKeyboardKeyUp(SKeyboardKey key);

@@ -156,6 +156,8 @@
     <ClInclude Include="..\..\include\SparkleCore\SKeyboardEvent.h" />
     <ClInclude Include="..\..\include\SparkleCore\SLoggable.h" />
     <ClInclude Include="..\..\include\SparkleCore\SLogger.h" />
+    <ClInclude Include="..\..\include\SparkleCore\SMouseMoveEvent.h" />
+    <ClInclude Include="..\..\include\SparkleCore\SPoint.h" />
     <ClInclude Include="..\..\include\SparkleCore\SSharedPtr.h" />
     <ClInclude Include="..\..\include\SparkleCore\SSize.h" />
     <ClInclude Include="..\..\include\SparkleCore\SString.h" />
@@ -170,6 +172,7 @@
     <ClCompile Include="..\..\src\SparkleCore\SEvent.cpp" />
     <ClCompile Include="..\..\src\SparkleCore\SKeyboardEvent.cpp" />
     <ClCompile Include="..\..\src\SparkleCore\SLogger.cpp" />
+    <ClCompile Include="..\..\src\SparkleCore\SMouseMoveEvent.cpp" />
     <ClCompile Include="..\..\src\SparkleCore\SString.cpp" />
     <ClCompile Include="..\..\src\SparkleCore\SWindow.cpp" />
     <ClCompile Include="..\..\src\SparkleCore\SWindow_MS_OpenGL.cpp" />

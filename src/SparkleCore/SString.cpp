@@ -69,7 +69,7 @@ SString::SString(const SString& str)
 
 SString::~SString()
 {
-
+	delete d_;
 }
 
 SString& SString::operator=(const wchar_t* unicodeStr)
@@ -97,6 +97,12 @@ SString& SString::operator=(const char* utf8Str)
 
 
 
+
+SString& SString::operator=(const SString& str)
+{
+	d_->byteArr = str.d_->byteArr;
+	return *this;
+}
 
 SString SString::operator+(const char* utf8Str)
 {

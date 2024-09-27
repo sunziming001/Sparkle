@@ -8,6 +8,7 @@
 
 #include "SActiveEvent.h"
 #include "SKeyboardEvent.h"
+#include "SMouseMoveEvent.h"
 
 #pragma comment(lib,"opengl32.lib")
 #pragma comment(lib,"glu32.lib")
@@ -313,7 +314,9 @@ void SWindow_MS_OpenGL::procWindowMessage(UINT uMsg, WPARAM wParam, LPARAM lPara
 	case WM_SYSKEYUP:
 		onKey(uMsg, wParam, lParam);
 		break;
-
+	case WM_MOUSEMOVE:
+		onMouseMove(wParam, lParam);
+		break;
 	default:
 		break;
 	}
@@ -368,6 +371,14 @@ void SWindow_MS_OpenGL::onKey(UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 }
 
+
+void SWindow_MS_OpenGL::onMouseMove(WPARAM wParam, LPARAM lParam)
+{
+	int32_t x = LOWORD(lParam);
+	int32_t y = HIWORD(lParam);
+	SSharedPtr<SEvent> e = new SMouseMoveEvent(x, y);
+	sendEvent(e);
+}
 
 void SWindow_MS_OpenGL::onKeyboardKeyDown(SKeyboardKey key)
 {

@@ -57,10 +57,16 @@
     <ClInclude Include="..\..\include\SparkleCore\SFlags.h">
       <Filter>头文件\events</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\SparkleCore\SLoggable.h">
+    <ClInclude Include="..\..\include\SparkleCore\SLogger.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\SparkleCore\SPoint.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\SparkleCore\SMouseMoveEvent.h">
       <Filter>头文件\events</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\SparkleCore\SLogger.h">
+    <ClInclude Include="..\..\include\SparkleCore\SLoggable.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -94,6 +100,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\SparkleCore\SLogger.cpp">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\SparkleCore\SMouseMoveEvent.cpp">
+      <Filter>源文件\events</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
