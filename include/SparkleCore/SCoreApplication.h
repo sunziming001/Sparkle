@@ -7,7 +7,7 @@
 #include "SSharedPtr.h"
 #include "SEvent.h"
 #include "SActiveEvent.h"
-#include "SKeyboardEvent.h"
+#include "SKeyEvent.h"
 
 
 class SPARKLE_API SCoreApplication
@@ -22,7 +22,7 @@ public:
 	void quit();
 protected:
 	virtual void onActiveEvent(SSharedPtr<SActiveEvent> e);
-	virtual void onKeyboardEvent(SSharedPtr<SKeyboardEvent> e);
+	virtual void onKeyboardEvent(SSharedPtr<SKeyEvent> e);
 private:
 	static SCoreApplication* instance;
 private:

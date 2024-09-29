@@ -64,8 +64,8 @@ void SCoreApplication::recvEvent(SSharedPtr<SEvent> e)
 	case SEventType::Active:
 		onActiveEvent(spk_dynamic_pointer_cast<SActiveEvent>(e));
 		break;
-	case SEventType::Keyboard:
-		onKeyboardEvent(spk_dynamic_pointer_cast<SKeyboardEvent>(e));
+	case SEventType::Key:
+		onKeyboardEvent(spk_dynamic_pointer_cast<SKeyEvent>(e));
 		break;
 	default:
 		break;
@@ -91,7 +91,7 @@ void SCoreApplication::onActiveEvent(SSharedPtr<SActiveEvent> e)
 
 }
 
-void SCoreApplication::onKeyboardEvent(SSharedPtr<SKeyboardEvent> e)
+void SCoreApplication::onKeyboardEvent(SSharedPtr<SKeyEvent> e)
 {
 
 }

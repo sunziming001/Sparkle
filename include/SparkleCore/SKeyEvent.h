@@ -5,14 +5,21 @@
 #include "SEvent.h"
 #include "SFlags.h"
 
-enum class SKeyboardStatus
+enum class SKeyType
+{
+	None,
+	Keyboard,
+	Mouse,
+};
+
+enum class SKeyStatus
 {
 	None,
 	Press,
 	Release,
 };
 
-enum class SKeyboardModifier
+enum class SKeyModifier
 {
 	None = 0,
 	Shift = 0x01,
@@ -20,9 +27,13 @@ enum class SKeyboardModifier
 	Alt	= 0x04,
 };
 
-enum class SKeyboardKey
+enum class SKeyEnum
 {
 	None,
+
+	Key_LMouse,
+	Key_RMouse,
+	Key_MMouse,
 
 	Key_A,
 	Key_B,
@@ -94,20 +105,23 @@ enum class SKeyboardKey
 	Key_Shift,
 	Key_Ctrl,
 	Key_Alt,
-
 };
 
 
-class SPARKLE_API SKeyboardEvent :public SEvent
+class SPARKLE_API SKeyEvent :public SEvent
 {
 public:
-	SKeyboardEvent(SKeyboardKey key,
-		SKeyboardStatus status,
-		SFlags<SKeyboardModifier> modifiers);
-	virtual ~SKeyboardEvent();
-	SKeyboardKey getKey()const;
-	SFlags<SKeyboardModifier> getModifiers()const;
-	SKeyboardStatus getStatus()const;
+	SKeyEvent(
+		SKeyType type,
+		SKeyEnum key,
+		SKeyStatus status,
+		SFlags<SKeyModifier> modifiers);
+	virtual ~SKeyEvent();
+
+	SKeyEnum getKeyEnum()const;
+	SFlags<SKeyModifier> getModifiers()const;
+	SKeyStatus getStatus()const;
+	SKeyType getType()const;
 
 	SStringPtr toLogString()const override;
 private:

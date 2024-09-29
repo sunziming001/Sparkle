@@ -51,7 +51,7 @@
     <ClInclude Include="..\..\include\SparkleCore\SCoreApplication.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\SparkleCore\SKeyboardEvent.h">
+    <ClInclude Include="..\..\include\SparkleCore\SKeyEvent.h">
       <Filter>头文件\events</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\SparkleCore\SFlags.h">
@@ -62,9 +62,6 @@
     </ClInclude>
     <ClInclude Include="..\..\include\SparkleCore\SPoint.h">
       <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\SparkleCore\SMouseMoveEvent.h">
-      <Filter>头文件\events</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\SparkleCore\SLoggable.h">
       <Filter>头文件</Filter>
@@ -95,7 +92,7 @@
     <ClCompile Include="..\..\src\SparkleCore\SCoreApplication.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\SparkleCore\SKeyboardEvent.cpp">
+    <ClCompile Include="..\..\src\SparkleCore\SKeyEvent.cpp">
       <Filter>源文件\events</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\SparkleCore\SLogger.cpp">

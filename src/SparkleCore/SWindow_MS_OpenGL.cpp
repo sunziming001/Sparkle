@@ -7,7 +7,7 @@
 #include <map>
 
 #include "SActiveEvent.h"
-#include "SKeyboardEvent.h"
+#include "SKeyEvent.h"
 #include "SMouseMoveEvent.h"
 
 #pragma comment(lib,"opengl32.lib")
@@ -26,7 +26,8 @@ struct SWindow_MS_OpenGL::Data
 	bool    active = TRUE;        // Window Active Flag Set To TRUE By Default
 	bool    fullscreen = TRUE;    // Fullscreen Flag Set To Fullscreen Mode By Default
 
-	SFlags<SKeyboardModifier> keyboardModifers;
+	SFlags<SKeyModifier> keyModifers;
+	SPoint2D mousePos;
 };
 static std::map<HWND, SWindow_MS_OpenGL*> gMapHWnd2SWindow_MS_OpenGL;
 
@@ -312,7 +313,15 @@ void SWindow_MS_OpenGL::procWindowMessage(UINT uMsg, WPARAM wParam, LPARAM lPara
 	case WM_KEYUP:
 	case WM_SYSKEYDOWN:
 	case WM_SYSKEYUP:
-		onKey(uMsg, wParam, lParam);
+		onKeyboardKey(uMsg, wParam, lParam);
+		break;
+	case WM_LBUTTONDOWN:
+	case WM_LBUTTONUP:
+	case WM_RBUTTONDOWN:
+	case WM_RBUTTONUP:
+	case WM_MBUTTONDOWN:
+	case WM_MBUTTONUP:
+		onMouseKey(uMsg, wParam, lParam);
 		break;
 	case WM_MOUSEMOVE:
 		onMouseMove(wParam, lParam);
@@ -329,7 +338,51 @@ void SWindow_MS_OpenGL::onActive(WPARAM wParam, LPARAM lParam)
 	sendEvent(e);
 }
 
-void SWindow_MS_OpenGL::onKey(UINT uMsg, WPARAM wParam, LPARAM lParam)
+void SWindow_MS_OpenGL::onMouseKey(UINT uMsg, WPARAM wParam, LPARAM lParam)
+{
+	SKeyType type = SKeyType::Mouse;
+	SKeyEnum key = SKeyEnum::None;
+	SKeyStatus status = SKeyStatus::None;
+
+	switch (uMsg)
+	{
+	case WM_LBUTTONDOWN:
+	case WM_LBUTTONUP:
+		key = SKeyEnum::Key_LMouse;
+		break;
+	case WM_RBUTTONDOWN:
+	case WM_RBUTTONUP:
+		key = SKeyEnum::Key_RMouse;
+		break;
+	case WM_MBUTTONDOWN:
+	case WM_MBUTTONUP:
+		key = SKeyEnum::Key_LMouse;
+		break;
+	default:
+		break;
+	}
+
+	switch (uMsg)
+	{
+	case WM_LBUTTONDOWN:
+	case WM_RBUTTONDOWN:
+	case WM_MBUTTONDOWN:
+		status = SKeyStatus::Press;
+		break;
+	case WM_LBUTTONUP:
+	case WM_RBUTTONUP:
+	case WM_MBUTTONUP:
+		status = SKeyStatus::Release;
+		break;
+	default:
+		break;
+	}
+
+	SSharedPtr<SEvent> e = new SKeyEvent(SKeyType::Mouse, key, status, d_->keyModifers);
+	sendEvent(e);
+}
+
+void SWindow_MS_OpenGL::onKeyboardKey(UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	WORD vkCode = LOWORD(wParam);                                 // virtual-key code
 
@@ -356,8 +409,8 @@ void SWindow_MS_OpenGL::onKey(UINT uMsg, WPARAM wParam, LPARAM lParam)
 		break;
 	}*/
 
-	SKeyboardKey key = getKeyboardKey(vkCode);
-	if (key != SKeyboardKey::None)
+	SKeyEnum key = getKeyboardKey(vkCode);
+	if (key != SKeyEnum::None)
 	{
 		if (isKeyReleased)
 		{
@@ -369,6 +422,7 @@ void SWindow_MS_OpenGL::onKey(UINT uMsg, WPARAM wParam, LPARAM lParam)
 		}
 	}
 
+
 }
 
 
@@ -376,91 +430,95 @@ void SWindow_MS_OpenGL::onMouseMove(WPARAM wParam, LPARAM lParam)
 {
 	int32_t x = LOWORD(lParam);
 	int32_t y = HIWORD(lParam);
+	d_->mousePos.x = x;
+	d_->mousePos.y = y;
+
 	SSharedPtr<SEvent> e = new SMouseMoveEvent(x, y);
+
 	sendEvent(e);
 }
 
-void SWindow_MS_OpenGL::onKeyboardKeyDown(SKeyboardKey key)
+void SWindow_MS_OpenGL::onKeyboardKeyDown(SKeyEnum key)
 {
-	SKeyboardStatus status = SKeyboardStatus::Press;
+	SKeyStatus status = SKeyStatus::Press;
 
-	if (key == SKeyboardKey::Key_Shift)
+	if (key == SKeyEnum::Key_Shift)
 	{
-		d_->keyboardModifers |= SKeyboardModifier::Shift;
+		d_->keyModifers |= SKeyModifier::Shift;
 	}
-	else if (key == SKeyboardKey::Key_Ctrl)
+	else if (key == SKeyEnum::Key_Ctrl)
 	{
-		d_->keyboardModifers |= SKeyboardModifier::Ctrl;
+		d_->keyModifers |= SKeyModifier::Ctrl;
 	}
-	else if (key == SKeyboardKey::Key_Alt)
+	else if (key == SKeyEnum::Key_Alt)
 	{
-		d_->keyboardModifers |= SKeyboardModifier::Alt;
+		d_->keyModifers |= SKeyModifier::Alt;
 	}
 
-	SSharedPtr<SEvent> e = new SKeyboardEvent(key, status, d_->keyboardModifers);
+	SSharedPtr<SEvent> e = new SKeyEvent(SKeyType::Keyboard, key, status, d_->keyModifers);
 	sendEvent(e);
 }
 
-void SWindow_MS_OpenGL::onKeyboardKeyUp(SKeyboardKey key)
+void SWindow_MS_OpenGL::onKeyboardKeyUp(SKeyEnum key)
 {
-	SKeyboardStatus status = SKeyboardStatus::Release;
-	if (key == SKeyboardKey::Key_Shift)
+	SKeyStatus status = SKeyStatus::Release;
+	if (key == SKeyEnum::Key_Shift)
 	{
-		d_->keyboardModifers &= !SFlags<SKeyboardModifier>(SKeyboardModifier::Shift);
+		d_->keyModifers &= !SFlags<SKeyModifier>(SKeyModifier::Shift);
 	}
-	else if (key == SKeyboardKey::Key_Ctrl)
+	else if (key == SKeyEnum::Key_Ctrl)
 	{
-		d_->keyboardModifers &= !SFlags<SKeyboardModifier>(SKeyboardModifier::Ctrl);
+		d_->keyModifers &= !SFlags<SKeyModifier>(SKeyModifier::Ctrl);
 	}
-	else if (key == SKeyboardKey::Key_Alt)
+	else if (key == SKeyEnum::Key_Alt)
 	{
-		d_->keyboardModifers &= !SFlags<SKeyboardModifier>(SKeyboardModifier::Alt);
+		d_->keyModifers &= !SFlags<SKeyModifier>(SKeyModifier::Alt);
 	}
 
-	SSharedPtr<SEvent> e = new SKeyboardEvent(key, status, d_->keyboardModifers);
+	SSharedPtr<SEvent> e = new SKeyEvent(SKeyType::Keyboard, key, status, d_->keyModifers);
 	sendEvent(e);
 }
 
-SKeyboardKey SWindow_MS_OpenGL::getKeyboardKey(WPARAM wParam)const
+SKeyEnum SWindow_MS_OpenGL::getKeyboardKey(WPARAM wParam)const
 {
 	#define BIND_MS_KEY(VK, KENUM, ref) \
 	case VK:\
 		ret = KENUM;\
 		break;\
 
-	SKeyboardKey ret = SKeyboardKey::None;
+	SKeyEnum ret = SKeyEnum::None;
 	switch (wParam)
 	{
-		BIND_MS_KEY(VK_SHIFT, SKeyboardKey::Key_Shift, ret);
-		BIND_MS_KEY(VK_CONTROL, SKeyboardKey::Key_Ctrl, ret);
-		BIND_MS_KEY(VK_MENU, SKeyboardKey::Key_Alt, ret);
+		BIND_MS_KEY(VK_SHIFT, SKeyEnum::Key_Shift, ret);
+		BIND_MS_KEY(VK_CONTROL, SKeyEnum::Key_Ctrl, ret);
+		BIND_MS_KEY(VK_MENU, SKeyEnum::Key_Alt, ret);
 
-		BIND_MS_KEY(0x41, SKeyboardKey::Key_A, ret);
-		BIND_MS_KEY(0x42, SKeyboardKey::Key_B, ret);
-		BIND_MS_KEY(0x43, SKeyboardKey::Key_C, ret);
-		BIND_MS_KEY(0x44, SKeyboardKey::Key_D, ret);
-		BIND_MS_KEY(0x45, SKeyboardKey::Key_E, ret);
-		BIND_MS_KEY(0x46, SKeyboardKey::Key_F, ret);
-		BIND_MS_KEY(0x47, SKeyboardKey::Key_G, ret);
-		BIND_MS_KEY(0x48, SKeyboardKey::Key_H, ret);
-		BIND_MS_KEY(0x49, SKeyboardKey::Key_I, ret);
-		BIND_MS_KEY(0x4A, SKeyboardKey::Key_J, ret);
-		BIND_MS_KEY(0x4B, SKeyboardKey::Key_K, ret);
-		BIND_MS_KEY(0x4C, SKeyboardKey::Key_L, ret);
-		BIND_MS_KEY(0x4D, SKeyboardKey::Key_M, ret);
-		BIND_MS_KEY(0x4E, SKeyboardKey::Key_N, ret);
-		BIND_MS_KEY(0x4F, SKeyboardKey::Key_O, ret);
-		BIND_MS_KEY(0x50, SKeyboardKey::Key_P, ret);
-		BIND_MS_KEY(0x51, SKeyboardKey::Key_Q, ret);
-		BIND_MS_KEY(0x52, SKeyboardKey::Key_R, ret);
-		BIND_MS_KEY(0x53, SKeyboardKey::Key_S, ret);
-		BIND_MS_KEY(0x54, SKeyboardKey::Key_T, ret);
-		BIND_MS_KEY(0x55, SKeyboardKey::Key_U, ret);
-		BIND_MS_KEY(0x56, SKeyboardKey::Key_V, ret);
-		BIND_MS_KEY(0x57, SKeyboardKey::Key_W, ret);
-		BIND_MS_KEY(0x58, SKeyboardKey::Key_X, ret);
-		BIND_MS_KEY(0x59, SKeyboardKey::Key_Y, ret);
-		BIND_MS_KEY(0x5A, SKeyboardKey::Key_Z, ret);
+		BIND_MS_KEY(0x41, SKeyEnum::Key_A, ret);
+		BIND_MS_KEY(0x42, SKeyEnum::Key_B, ret);
+		BIND_MS_KEY(0x43, SKeyEnum::Key_C, ret);
+		BIND_MS_KEY(0x44, SKeyEnum::Key_D, ret);
+		BIND_MS_KEY(0x45, SKeyEnum::Key_E, ret);
+		BIND_MS_KEY(0x46, SKeyEnum::Key_F, ret);
+		BIND_MS_KEY(0x47, SKeyEnum::Key_G, ret);
+		BIND_MS_KEY(0x48, SKeyEnum::Key_H, ret);
+		BIND_MS_KEY(0x49, SKeyEnum::Key_I, ret);
+		BIND_MS_KEY(0x4A, SKeyEnum::Key_J, ret);
+		BIND_MS_KEY(0x4B, SKeyEnum::Key_K, ret);
+		BIND_MS_KEY(0x4C, SKeyEnum::Key_L, ret);
+		BIND_MS_KEY(0x4D, SKeyEnum::Key_M, ret);
+		BIND_MS_KEY(0x4E, SKeyEnum::Key_N, ret);
+		BIND_MS_KEY(0x4F, SKeyEnum::Key_O, ret);
+		BIND_MS_KEY(0x50, SKeyEnum::Key_P, ret);
+		BIND_MS_KEY(0x51, SKeyEnum::Key_Q, ret);
+		BIND_MS_KEY(0x52, SKeyEnum::Key_R, ret);
+		BIND_MS_KEY(0x53, SKeyEnum::Key_S, ret);
+		BIND_MS_KEY(0x54, SKeyEnum::Key_T, ret);
+		BIND_MS_KEY(0x55, SKeyEnum::Key_U, ret);
+		BIND_MS_KEY(0x56, SKeyEnum::Key_V, ret);
+		BIND_MS_KEY(0x57, SKeyEnum::Key_W, ret);
+		BIND_MS_KEY(0x58, SKeyEnum::Key_X, ret);
+		BIND_MS_KEY(0x59, SKeyEnum::Key_Y, ret);
+		BIND_MS_KEY(0x5A, SKeyEnum::Key_Z, ret);
 	default:
 		break;
 	}

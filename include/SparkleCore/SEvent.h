@@ -12,7 +12,7 @@ enum class SPARKLE_API SEventType
 	Close,
 	MouseMove,
 	MouseButton,
-	Keyboard,
+	Key,
 };
 
 class SPARKLE_API SEvent:public SLoggable

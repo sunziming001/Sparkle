@@ -54,11 +54,8 @@ SStringPtr SEvent::EventTypeToString(SEventType tp)
 	case SEventType::MouseMove:
 		(*ret) << SWS("MouseMove");
 		break;
-	case SEventType::MouseButton:
-		(*ret) << SWS("MouseButton");
-		break;
-	case SEventType::Keyboard:
-		(*ret) << SWS("Keyboard");
+	case SEventType::Key:
+		(*ret) << SWS("Key");
 		break;
 	case SEventType::None:
 	default:

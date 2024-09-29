@@ -4,7 +4,7 @@
 
 #include "SWindow.h"
 #include <windows.h>
-#include "SKeyboardEvent.h"
+#include "SKeyEvent.h"
 
 class SPARKLE_API SWindow_MS_OpenGL:public SWindow
 {
@@ -21,13 +21,14 @@ private:
 
 	void procWindowMessage(UINT uMsg, WPARAM wParam, LPARAM lParam);
 	void onActive(WPARAM wParam, LPARAM lParam);
-	void onKey(UINT uMsg, WPARAM wParam, LPARAM lParam);
+	void onMouseKey(UINT uMsg, WPARAM wParam, LPARAM lParam);
+	void onKeyboardKey(UINT uMsg, WPARAM wParam, LPARAM lParam);
 	void onMouseMove(WPARAM wParam, LPARAM lParam);
 
-	void onKeyboardKeyDown(SKeyboardKey key);
-	void onKeyboardKeyUp(SKeyboardKey key);
+	void onKeyboardKeyDown(SKeyEnum key);
+	void onKeyboardKeyUp(SKeyEnum key);
 
-	SKeyboardKey getKeyboardKey(WPARAM wParam)const;
+	SKeyEnum getKeyboardKey(WPARAM wParam)const;
 private:
 	DECLARE_INNER_DATA(d_)
 };
