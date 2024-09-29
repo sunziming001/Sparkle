@@ -80,6 +80,15 @@ SByteArray& SByteArray::operator+=(const SByteArray& _other)
 	return *this;
 }
 
+void SByteArray::writeData(SByteSize destPos, const void* dataPtr, SByteSize dataSize)
+{
+	if (destPos < size()
+		&& destPos + dataSize <= size())
+	{
+		memcpy(this->ptr_ + destPos, dataPtr, dataSize);
+	}
+}
+
 SByteArray& SByteArray::operator-=(size_t size)
 {
 	if (size <= size_)

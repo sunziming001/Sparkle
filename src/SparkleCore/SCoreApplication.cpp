@@ -58,7 +58,7 @@ SCoreApplication* SCoreApplication::getInstance()
 
 void SCoreApplication::recvEvent(SSharedPtr<SEvent> e)
 {
-	STrace("App") << e->toLogString();
+	//STrace("App") << e->toLogString();
 	switch (e->getEventType())
 	{
 	case SEventType::Active:

@@ -5,7 +5,7 @@
 #include <iostream>
 #include <map>
 
-
+#include "SSurfaceRender_OpenGL.h"
 #include "SActiveEvent.h"
 #include "SKeyEvent.h"
 #include "SMouseMoveEvent.h"
@@ -28,6 +28,8 @@ struct SWindow_MS_OpenGL::Data
 
 	SFlags<SKeyModifier> keyModifers;
 	SPoint2D mousePos;
+
+	SSurfaceRenderPtr surfaceRender;
 };
 static std::map<HWND, SWindow_MS_OpenGL*> gMapHWnd2SWindow_MS_OpenGL;
 
@@ -35,11 +37,22 @@ SWindow_MS_OpenGL::SWindow_MS_OpenGL(const SWindowConf& conf)
 	:SWindow(conf)
 	,d_(new Data())
 {
+	
+
 	createGLWindow();
 	if (d_->hWnd)
 	{
 		gMapHWnd2SWindow_MS_OpenGL[d_->hWnd] = this;
 	}
+
+	d_->surfaceRender = new SSurfaceRender_OpenGL();
+	//test code
+	SSurfacePtr surface = new SSurface(3);
+	surface->setVertex(0, SVertex(SPointF3D{ -0.5f, -0.5f, 0.0f }));
+	surface->setVertex(1, SVertex(SPointF3D{ 0.5f, -0.5f, 0.0f }));
+	surface->setVertex(2, SVertex(SPointF3D{ 0.0f, 0.5f, 0.0f }));
+
+	d_->surfaceRender->addSurface(surface);
 }
 
 SWindow_MS_OpenGL::~SWindow_MS_OpenGL()
@@ -68,12 +81,15 @@ void SWindow_MS_OpenGL::runOnce()
 	MSG msg;
 	if (PeekMessageW(&msg, NULL, 0, 0, PM_REMOVE))           // Is There A Message Waiting?
 	{
-		TranslateMessage(&msg);             // Translate The Message
-		DispatchMessageW(&msg);              // Dispatch The Message
-
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
+		d_->surfaceRender->renderOnce();
+
+		TranslateMessage(&msg);             // Translate The Message
+		DispatchMessageW(&msg);              // Dispatch The Message
+
+		
 		SwapBuffers(d_->hDC);
 
 		
@@ -82,12 +98,12 @@ void SWindow_MS_OpenGL::runOnce()
 
 void SWindow_MS_OpenGL::initGL()
 {
-	glShadeModel(GL_SMOOTH);                            // Enable Smooth Shading
-	glClearColor(0.0f, 0.0f, 0.0f, 0.5f);               // Black Background
-	glClearDepth(1.0f);                                 // Depth Buffer Setup
-	glEnable(GL_DEPTH_TEST);                            // Enables Depth Testing
-	glDepthFunc(GL_LEQUAL);                             // The Type Of Depth Testing To Do
-	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);  // Really Nice Perspective Calculations
+	//glShadeModel(GL_SMOOTH);                            // Enable Smooth Shading
+	//glClearColor(0.0f, 0.0f, 0.0f, 0.5f);               // Black Background
+	//glClearDepth(1.0f);                                 // Depth Buffer Setup
+	//glEnable(GL_DEPTH_TEST);                            // Enables Depth Testing
+	//glDepthFunc(GL_LEQUAL);                             // The Type Of Depth Testing To Do
+	//glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);  // Really Nice Perspective Calculations
 }
 
 bool SWindow_MS_OpenGL::createGLWindow()
@@ -197,8 +213,8 @@ bool SWindow_MS_OpenGL::createGLWindow()
 		0,                                          // Shift Bit Ignored
 		0,                                          // No Accumulation Buffer
 		0, 0, 0, 0,                                 // Accumulation Bits Ignored
-		16,                                         // 16Bit Z-Buffer (Depth Buffer)  
-		0,                                          // No Stencil Buffer
+		24,                                         // 16Bit Z-Buffer (Depth Buffer)  
+		8,                                          // No Stencil Buffer
 		0,                                          // No Auxiliary Buffer
 		PFD_MAIN_PLANE,                             // Main Drawing Layer
 		0,                                          // Reserved

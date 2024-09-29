@@ -43,15 +43,7 @@ public:
 
 	~SSharedPtr()
 	{
-		(*refCntPtr_)--;
-		if (*refCntPtr_ == 0)
-		{
-			delete refCntPtr_;
-			delete ptr_;
-
-			refCntPtr_ = nullptr;
-			ptr_ = nullptr;
-		}
+		cleanup();
 	}
 
 	T& operator*()
@@ -61,6 +53,7 @@ public:
 
 	SSharedPtr& operator=(const SSharedPtr& _other)
 	{
+		cleanup();
 		ptr_ = _other.ptr_;
 		refCntPtr_ = _other.refCntPtr_;
 
@@ -70,9 +63,16 @@ public:
 
 	SSharedPtr operator=(T* ptr)
 	{
-		SSharedPtr ret(ptr);
+		cleanup();
+		ptr_ = ptr;
+		refCntPtr_ = new RefCntType;
+		*refCntPtr_ = 1;
+		return *this;
+	}
 
-		return ret;
+	bool operator<(const SSharedPtr& _other)const
+	{
+		return ptr_ < _other.ptr_;
 	}
 
 	RefCntType getCount()const
@@ -104,6 +104,19 @@ public:
 	RefCntType* getRefCntPtr()const
 	{
 		return this->refCntPtr_;
+	}
+private:
+	void cleanup()
+	{
+		(*refCntPtr_)--;
+		if (*refCntPtr_ == 0)
+		{
+			delete refCntPtr_;
+			delete ptr_;
+
+			refCntPtr_ = nullptr;
+			ptr_ = nullptr;
+		}
 	}
 private:
 	T* ptr_;

@@ -5,11 +5,10 @@
 #include "SWindow_MS_OpenGL.h"
 #include "SCoreApplication.h"
 #include "SLogger.h"
+#include <set>
 
 int main(int argc, char** argv)
 {
-
-
 	SWindowConf conf = {
 		{800,600},
 		"TestWindow",

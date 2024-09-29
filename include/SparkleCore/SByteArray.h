@@ -3,6 +3,7 @@
 
 #include "SConfig.h"
 #include "stdint.h"
+#include "SSharedPtr.h"
 
 typedef uint8_t SByte;
 typedef size_t SByteSize;
@@ -21,6 +22,8 @@ public:
 	SByteArray& operator+=(const SByteArray& _other);
 
 	SByteArray& operator-=(size_t size);
+
+	void writeData(SByteSize destPos, const void* dataPtr, SByteSize dataSize);
 private:
 	void cleanup();
 private:
@@ -29,5 +32,6 @@ private:
 
 };
 
+typedef SSharedPtr<SByteArray> SByteArrayPtr;
 
 #endif

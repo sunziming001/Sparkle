@@ -169,9 +169,13 @@
     <ClInclude Include="..\..\include\SparkleCore\SLoggable.h" />
     <ClInclude Include="..\..\include\SparkleCore\SLogger.h" />
     <ClInclude Include="..\..\include\SparkleCore\SPoint.h" />
+    <ClInclude Include="..\..\include\SparkleCore\SSurfaceRender.h" />
     <ClInclude Include="..\..\include\SparkleCore\SSharedPtr.h" />
     <ClInclude Include="..\..\include\SparkleCore\SSize.h" />
     <ClInclude Include="..\..\include\SparkleCore\SString.h" />
+    <ClInclude Include="..\..\include\SparkleCore\SSurface.h" />
+    <ClInclude Include="..\..\include\SparkleCore\SSurfaceRender_OpenGL.h" />
+    <ClInclude Include="..\..\include\SparkleCore\SVertex.h" />
     <ClInclude Include="..\..\include\SparkleCore\SWindow.h" />
     <ClInclude Include="..\..\include\SparkleCore\SWindow_MS_OpenGL.h" />
   </ItemGroup>
@@ -184,7 +188,11 @@
     <ClCompile Include="..\..\src\SparkleCore\SKeyEvent.cpp" />
     <ClCompile Include="..\..\src\SparkleCore\SLogger.cpp" />
     <ClCompile Include="..\..\src\SparkleCore\SMouseMoveEvent.cpp" />
+    <ClCompile Include="..\..\src\SparkleCore\SSurfaceRender.cpp" />
     <ClCompile Include="..\..\src\SparkleCore\SString.cpp" />
+    <ClCompile Include="..\..\src\SparkleCore\SSurface.cpp" />
+    <ClCompile Include="..\..\src\SparkleCore\SSurfaceRender_OpenGL.cpp" />
+    <ClCompile Include="..\..\src\SparkleCore\SVertex.cpp" />
     <ClCompile Include="..\..\src\SparkleCore\SWindow.cpp" />
     <ClCompile Include="..\..\src\SparkleCore\SWindow_MS_OpenGL.cpp" />
   </ItemGroup>
