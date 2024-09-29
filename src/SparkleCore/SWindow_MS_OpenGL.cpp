@@ -1,10 +1,10 @@
 #include "SWindow_MS_OpenGL.h"
-
+#include <glad/glad.h>
 #include <windows.h>                              // Header File For Windows
-#include <gl\gl.h>                                // Header File For The OpenGL32 Library
 #include <gl\glu.h>                               // Header File For The GLu32 Library
 #include <iostream>
 #include <map>
+
 
 #include "SActiveEvent.h"
 #include "SKeyEvent.h"
@@ -70,6 +70,13 @@ void SWindow_MS_OpenGL::runOnce()
 	{
 		TranslateMessage(&msg);             // Translate The Message
 		DispatchMessageW(&msg);              // Dispatch The Message
+
+		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT);
+
+		SwapBuffers(d_->hDC);
+
+		
 	}
 }
 
@@ -233,11 +240,19 @@ bool SWindow_MS_OpenGL::createGLWindow()
 		return false;                               // Return FALSE
 	}
 
+	if (!gladLoadGL())
+	{
+		killGLWindow();
+		MessageBoxW(NULL, L"GLAD map failed.", L"ERROR", MB_OK | MB_ICONEXCLAMATION);
+		return false;
+	}
+
 	ShowWindow(d_->hWnd, SW_SHOW);                       // Show The Window
 	SetForegroundWindow(d_->hWnd);                      // Slightly Higher Priority
 	SetFocus(d_->hWnd);                                 // Sets Keyboard Focus To The Window
-	resize(getConf().wndSize);                   // Set Up Our Perspective GL Screen
+	
 
+	resize(getConf().wndSize);                   // Set Up Our Perspective GL Screen
 	initGL();
 
 	return true;                                    // Success

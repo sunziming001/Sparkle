@@ -11,7 +11,6 @@ enum class SPARKLE_API SEventType
 	Active,
 	Close,
 	MouseMove,
-	MouseButton,
 	Key,
 };
 
