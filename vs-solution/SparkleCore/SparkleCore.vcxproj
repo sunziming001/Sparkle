@@ -168,6 +168,7 @@
     <ClInclude Include="..\..\include\SparkleCore\SKeyEvent.h" />
     <ClInclude Include="..\..\include\SparkleCore\SLoggable.h" />
     <ClInclude Include="..\..\include\SparkleCore\SLogger.h" />
+    <ClInclude Include="..\..\include\SparkleCore\SpkFileHelper.h" />
     <ClInclude Include="..\..\include\SparkleCore\SPoint.h" />
     <ClInclude Include="..\..\include\SparkleCore\SSurfaceRender.h" />
     <ClInclude Include="..\..\include\SparkleCore\SSharedPtr.h" />
@@ -188,6 +189,7 @@
     <ClCompile Include="..\..\src\SparkleCore\SKeyEvent.cpp" />
     <ClCompile Include="..\..\src\SparkleCore\SLogger.cpp" />
     <ClCompile Include="..\..\src\SparkleCore\SMouseMoveEvent.cpp" />
+    <ClCompile Include="..\..\src\SparkleCore\SpkFileHelper.cpp" />
     <ClCompile Include="..\..\src\SparkleCore\SSurfaceRender.cpp" />
     <ClCompile Include="..\..\src\SparkleCore\SString.cpp" />
     <ClCompile Include="..\..\src\SparkleCore\SSurface.cpp" />

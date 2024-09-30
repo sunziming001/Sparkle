@@ -49,6 +49,7 @@ public:
 
 	const SByteArray& toByteArray()const;
 	SByteArray toUtf8()const;
+	const wchar_t* wc_str()const;
 	size_t length()const;
 	bool hasFmtFlag(FmtFlag flag)const;
 	

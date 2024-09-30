@@ -6,9 +6,12 @@
 #include "SCoreApplication.h"
 #include "SLogger.h"
 #include <set>
+#include "SpkFileHelper.h"
 
 int main(int argc, char** argv)
 {
+	SpkFileHelper::getInstance()->compressDir(SWS("./res/"), SWS("res.spk"));
+
 	SWindowConf conf = {
 		{800,600},
 		"TestWindow",

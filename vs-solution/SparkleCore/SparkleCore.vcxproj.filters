@@ -25,6 +25,12 @@
     <Filter Include="源文件\render">
       <UniqueIdentifier>{bb508d78-b5be-4879-a85e-ae0e662f29a4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\res_pack">
+      <UniqueIdentifier>{e12571f4-a277-4a6d-83d4-964df955d723}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\res_pack">
+      <UniqueIdentifier>{835e047e-35fe-42ca-9709-edc16f4c5ee0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\SparkleCore\SSharedPtr.h">
@@ -84,6 +90,9 @@
     <ClInclude Include="..\..\include\SparkleCore\SSurfaceRender_OpenGL.h">
       <Filter>头文件\render</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\SparkleCore\SpkFileHelper.h">
+      <Filter>头文件\res_pack</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\SparkleCore\SConfig.cpp">
@@ -130,6 +139,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\SparkleCore\SSurfaceRender_OpenGL.cpp">
       <Filter>源文件\render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\SparkleCore\SpkFileHelper.cpp">
+      <Filter>源文件\res_pack</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

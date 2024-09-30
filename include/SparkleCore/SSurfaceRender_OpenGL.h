@@ -4,6 +4,8 @@
 #include "SConfig.h"
 #include "SSurfaceRender.h"
 
+
+
 class SSurfaceRender_OpenGL :public SSurfaceRender
 {
 public:

@@ -220,6 +220,11 @@ SByteArray SString::toUtf8() const
 	return FromUnicodeToUtf8(d_->byteArr);
 }
 
+const wchar_t* SString::wc_str() const
+{
+	return (const wchar_t*)toByteArray().data();
+}
+
 size_t SString::length() const
 {
 	size_t charSize = sizeof(wchar_t);
