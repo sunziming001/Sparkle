@@ -47,10 +47,13 @@ SWindow_MS_OpenGL::SWindow_MS_OpenGL(const SWindowConf& conf)
 
 	d_->surfaceRender = new SSurfaceRender_OpenGL();
 	//test code
-	SSurfacePtr surface = new SSurface(3);
+	SSurfacePtr surface = new SSurface(6);
 	surface->setVertex(0, SVertex(SPointF3D{ -0.5f, -0.5f, 0.0f }));
-	surface->setVertex(1, SVertex(SPointF3D{ 0.5f, -0.5f, 0.0f }));
-	surface->setVertex(2, SVertex(SPointF3D{ 0.0f, 0.5f, 0.0f }));
+	surface->setVertex(1, SVertex(SPointF3D{ -0.5f, 0.5f, 0.0f }));
+	surface->setVertex(2, SVertex(SPointF3D{ 0.0f, 0.75f, 0.0f }));
+	surface->setVertex(3, SVertex(SPointF3D{ 0.5f, 0.5f, 0.0f }));
+	surface->setVertex(4, SVertex(SPointF3D{ 0.5f, -0.5f, 0.0f }));
+	surface->setVertex(5, SVertex(SPointF3D{ 0.0f, -0.75f, 0.0f }));
 
 	d_->surfaceRender->addSurface(surface);
 }

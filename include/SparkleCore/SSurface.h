@@ -12,8 +12,13 @@ public:
 	SSurface(uint32_t vertexCnt);
 	~SSurface();
 	uint32_t getVertexCnt();
+	uint32_t getTriangleCnt()const;
+	const uint32_t* getVertexDrawOrder()const;
+	size_t getVertexDrawOrderSize()const;
+	size_t getVertexDrawOrderCnt()const;
 	void setVertex(uint32_t index, const SVertex& vertex);
 	SByteArrayPtr toByteArrayPtr();
+	
 private:
 	DECLARE_INNER_DATA(d_);
 

@@ -5,8 +5,9 @@
 
 struct SSurfaceData_OpenGL
 {
-	GLuint VBO=0;
-	GLuint VAO=0;
+	GLuint VBO = 0;
+	GLuint VAO = 0;
+	GLuint EBO = 0;
 };
 
 struct SSurfaceRender_OpenGL::Data
@@ -89,20 +90,20 @@ void SSurfaceRender_OpenGL::onAdd(SSurfacePtr surface)
 	{
 		byteArrPtr = surface->toByteArrayPtr();
 
-		float vertices[] = {
-	   -0.5f, -0.5f, 0.0f, // left  
-		0.5f, -0.5f, 0.0f, // right 
-		0.0f,  0.5f, 0.0f  // top   
-		};
-
 		glGenVertexArrays(1, &surfaceData.VAO);
 		glGenBuffers(1, &surfaceData.VBO);
+
+		glGenBuffers(1, &surfaceData.EBO);
+
 		// bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
 		glBindVertexArray(surfaceData.VAO);
 
 		glBindBuffer(GL_ARRAY_BUFFER, surfaceData.VBO);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, byteArrPtr->size(), byteArrPtr->data(), GL_STATIC_DRAW);
 
+
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, surfaceData.EBO);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, surface->getVertexDrawOrderSize(), surface->getVertexDrawOrder(), GL_STATIC_DRAW);
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 		glEnableVertexAttribArray(0);
 
@@ -128,6 +129,8 @@ void SSurfaceRender_OpenGL::onRemove(SSurfacePtr surface)
 	{
 		glDeleteVertexArrays(1, &(iter->second.VAO));
 		glDeleteBuffers(1, &(iter->second.VBO));
+		glDeleteBuffers(1, &(iter->second.EBO));
+
 		d_->mapSurface2Data.erase(iter);
 	}
 	
@@ -135,7 +138,7 @@ void SSurfaceRender_OpenGL::onRemove(SSurfacePtr surface)
 
 void SSurfaceRender_OpenGL::onBeforeRenderOnce()
 {
-	
+	glUseProgram(d_->shaderProgram);
 }
 
 void SSurfaceRender_OpenGL::onRenderSurface(SSurfacePtr surface)
@@ -143,10 +146,12 @@ void SSurfaceRender_OpenGL::onRenderSurface(SSurfacePtr surface)
 	auto iter = d_->mapSurface2Data.find(surface);
 	if (iter != d_->mapSurface2Data.end())
 	{
+		size_t drawOrderCnt = surface->getVertexDrawOrderCnt();
 		SSurfaceData_OpenGL& data = iter->second;
-		glUseProgram(d_->shaderProgram);
+		
 		glBindVertexArray(data.VAO);
-		glDrawArrays(GL_TRIANGLES, 0, 3);
+		//glDrawArrays(GL_TRIANGLES, 0, surface->getVertexCnt());
+		glDrawElements(GL_TRIANGLES, drawOrderCnt, GL_UNSIGNED_INT, 0);
 		glBindVertexArray(0);
 
 	}
@@ -155,5 +160,5 @@ void SSurfaceRender_OpenGL::onRenderSurface(SSurfacePtr surface)
 
 void SSurfaceRender_OpenGL::onAfterRenderOnce()
 {
-	//glUseProgram(0);
+	glUseProgram(0);
 }
