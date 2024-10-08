@@ -240,7 +240,7 @@ SByteArray SString::FromUtf8ToUnicode(const SByteArray& utf8Data)
 {
 	std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> converter;
 	std::wstring ws = converter.from_bytes((char*)utf8Data.data(), (char*)utf8Data.data() + utf8Data.size());
-	return SByteArray((SByte*)ws.c_str(), ws.length() * sizeof(wchar_t));
+	return SByteArray((SByte*)ws.c_str(), wcslen(ws.c_str()) * sizeof(wchar_t));
 }
 
 SByteArray SString::FromUnicodeToUtf8(const SByteArray& unicodeData)
@@ -248,7 +248,7 @@ SByteArray SString::FromUnicodeToUtf8(const SByteArray& unicodeData)
 	std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> converter;
 	std::wstring wstr = (wchar_t*)unicodeData.data();
 	std::string s = converter.to_bytes((wchar_t*)unicodeData.data(), (wchar_t*)unicodeData.data() + unicodeData.size());
-	return SByteArray((SByte*)s.c_str(), s.length());
+	return SByteArray((SByte*)s.c_str(), strlen(s.c_str()));
 }
 
 SString SString::FromNumber(int32_t value)

@@ -2,6 +2,7 @@
 #include <map>
 #include "glad/glad.h"
 #include "SLogger.h"
+#include "SpkFileHelper.h"
 
 struct SSurfaceData_OpenGL
 {
@@ -14,66 +15,19 @@ struct SSurfaceRender_OpenGL::Data
 {
 	GLuint shaderProgram=0;
 	std::map<SSurfacePtr, SSurfaceData_OpenGL> mapSurface2Data;
+	SByteArray vertexShaderSource;
+	SByteArray fragmentShaderSource;
 };
 
-const char* vertexShaderSource = "#version 330 core\n"
-"layout (location = 0) in vec3 aPos;\n"
-"void main()\n"
-"{\n"
-"   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
-"}\0";
-const char* fragmentShaderSource = "#version 330 core\n"
-"out vec4 FragColor;\n"
-"void main()\n"
-"{\n"
-"   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
-"}\n\0";
 
 SSurfaceRender_OpenGL::SSurfaceRender_OpenGL()
 	:SSurfaceRender()
 	,d_(new Data())
 {
-	// build and compile our shader program
-	// ------------------------------------
-	// vertex shader
-	unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
-	glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
-	glCompileShader(vertexShader);
-	// check for shader compile errors
-	int success;
-	char infoLog[512];
-	glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
-	if (!success)
-	{
-		glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
-		SError("SSurfaceRender_OpenGL") << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog;
-	}
-	// fragment shader
-	unsigned int fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-	glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
-	glCompileShader(fragmentShader);
-	// check for shader compile errors
-	glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
-	if (!success)
-	{
-		glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
-		SError("SSurfaceRender_OpenGL") << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" << infoLog;
-	}
-	// link shaders
-	unsigned int shaderProgram = glCreateProgram();
-	glAttachShader(shaderProgram, vertexShader);
-	glAttachShader(shaderProgram, fragmentShader);
-	glLinkProgram(shaderProgram);
-	// check for linking errors
-	glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
-	if (!success) {
-		glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
-		SError("SSurfaceRender_OpenGL") << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog ;
-	}
-	glDeleteShader(vertexShader);
-	glDeleteShader(fragmentShader);
-
-	d_->shaderProgram = shaderProgram;
+	d_->vertexShaderSource = SpkFileHelper::getInstance()->getRes(SWS("core\\opengl\\shader\\common.vs"));
+	d_->fragmentShaderSource = SpkFileHelper::getInstance()->getRes(SWS("core\\opengl\\shader\\common.fs"));
+	
+	initShader();
 }
 
 SSurfaceRender_OpenGL::~SSurfaceRender_OpenGL()
@@ -161,4 +115,59 @@ void SSurfaceRender_OpenGL::onRenderSurface(SSurfacePtr surface)
 void SSurfaceRender_OpenGL::onAfterRenderOnce()
 {
 	glUseProgram(0);
+}
+
+void SSurfaceRender_OpenGL::initShader()
+{
+
+	// build and compile our shader program
+	// ------------------------------------
+	// vertex shader
+	char* vertexShaderSource = (char*)calloc(1, d_->vertexShaderSource.size() + 1);
+	memcpy(vertexShaderSource, d_->vertexShaderSource.data(), d_->vertexShaderSource.size());
+	unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
+	glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
+	glCompileShader(vertexShader);
+	// check for shader compile errors
+	int success;
+	char infoLog[512];
+	glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
+	if (!success)
+	{
+		glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
+		SError("SSurfaceRender_OpenGL") << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog;
+	}
+
+
+	// fragment shader
+	char* fragmentShaderSource = (char*)calloc(1, d_->fragmentShaderSource.size() + 1);
+	memcpy(fragmentShaderSource, d_->fragmentShaderSource.data(), d_->fragmentShaderSource.size());
+	unsigned int fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+	glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
+	glCompileShader(fragmentShader);
+	// check for shader compile errors
+	glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
+	if (!success)
+	{
+		glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
+		SError("SSurfaceRender_OpenGL") << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" << infoLog;
+	}
+	// link shaders
+	unsigned int shaderProgram = glCreateProgram();
+	glAttachShader(shaderProgram, vertexShader);
+	glAttachShader(shaderProgram, fragmentShader);
+	glLinkProgram(shaderProgram);
+	// check for linking errors
+	glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
+	if (!success) {
+		glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
+		SError("SSurfaceRender_OpenGL") << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog;
+	}
+	glDeleteShader(vertexShader);
+	glDeleteShader(fragmentShader);
+
+	d_->shaderProgram = shaderProgram;
+
+	free(vertexShaderSource);
+	free(fragmentShaderSource);
 }

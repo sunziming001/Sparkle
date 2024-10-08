@@ -10,7 +10,8 @@
 
 int main(int argc, char** argv)
 {
-	SpkFileHelper::getInstance()->compressDir(SWS("./res/"), SWS("res.spk"));
+
+	SpkFileHelper::getInstance()->loadPackage(SWS("res.spk"));
 
 	SWindowConf conf = {
 		{800,600},
@@ -23,6 +24,7 @@ int main(int argc, char** argv)
 	SWindow_MS_OpenGL window(conf);
 	app.exec();
 
+	
 	
 
 	return 0;

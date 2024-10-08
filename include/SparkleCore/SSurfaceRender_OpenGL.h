@@ -18,6 +18,8 @@ protected:
 	void onRenderSurface(SSurfacePtr surface)override;
 	void onAfterRenderOnce()override;
 private:
+	void initShader();
+private:
 	DECLARE_INNER_DATA(d_);
 };
 
