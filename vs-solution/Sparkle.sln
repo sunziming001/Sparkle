@@ -5,6 +5,7 @@ VisualStudioVersion = 16.0.34301.259
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sparkle-win", "Sparkle.vcxproj", "{60A8F038-0C18-44BC-8C47-E4A9AE7E30A1}"
 	ProjectSection(ProjectDependencies) = postProject
+		{2EE38405-DB94-400B-AD84-32A1311CBAA9} = {2EE38405-DB94-400B-AD84-32A1311CBAA9}
 		{00A15867-BE95-4167-9417-34EB3B0F8A66} = {00A15867-BE95-4167-9417-34EB3B0F8A66}
 	EndProjectSection
 EndProject
@@ -14,6 +15,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SparkleCore", "SparkleCore\
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "glad", "glad\glad.vcxproj", "{0B340E5E-6892-434A-9E53-0313F865320B}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SparklePack", "SparklePack\SparklePack.vcxproj", "{2EE38405-DB94-400B-AD84-32A1311CBAA9}"
+	ProjectSection(ProjectDependencies) = postProject
+		{00A15867-BE95-4167-9417-34EB3B0F8A66} = {00A15867-BE95-4167-9417-34EB3B0F8A66}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +53,14 @@ Global
 		{0B340E5E-6892-434A-9E53-0313F865320B}.Release|x64.Build.0 = Release|x64
 		{0B340E5E-6892-434A-9E53-0313F865320B}.Release|x86.ActiveCfg = Release|Win32
 		{0B340E5E-6892-434A-9E53-0313F865320B}.Release|x86.Build.0 = Release|Win32
+		{2EE38405-DB94-400B-AD84-32A1311CBAA9}.Debug|x64.ActiveCfg = Debug|x64
+		{2EE38405-DB94-400B-AD84-32A1311CBAA9}.Debug|x64.Build.0 = Debug|x64
+		{2EE38405-DB94-400B-AD84-32A1311CBAA9}.Debug|x86.ActiveCfg = Debug|Win32
+		{2EE38405-DB94-400B-AD84-32A1311CBAA9}.Debug|x86.Build.0 = Debug|Win32
+		{2EE38405-DB94-400B-AD84-32A1311CBAA9}.Release|x64.ActiveCfg = Release|x64
+		{2EE38405-DB94-400B-AD84-32A1311CBAA9}.Release|x64.Build.0 = Release|x64
+		{2EE38405-DB94-400B-AD84-32A1311CBAA9}.Release|x86.ActiveCfg = Release|Win32
+		{2EE38405-DB94-400B-AD84-32A1311CBAA9}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
