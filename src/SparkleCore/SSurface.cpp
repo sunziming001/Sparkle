@@ -1,4 +1,5 @@
 #include "SSurface.h"
+#include "SImage.h"
 
 struct SSurface::Data
 {
@@ -6,7 +7,9 @@ struct SSurface::Data
 	uint32_t* vertexDrawOrder;
 
 	uint32_t vertexCnt;
-	SByteArrayPtr byteArrayPtr;
+	SByteArrayPtr vertexDataPtr;
+
+	SImage texture;
 };
 
 
@@ -14,7 +17,7 @@ SSurface::SSurface(uint32_t vertexCnt)
 	:d_(new Data())
 {
 	uint32_t triangleCnt = (vertexCnt - 2);
-	d_->byteArrayPtr = new SByteArray(SVertex::GetVertexSize() * vertexCnt);
+	d_->vertexDataPtr = new SByteArray(SVertex::GetVertexSize() * vertexCnt);
 	d_->vertices = new SVertex[vertexCnt];
 	d_->vertexCnt = vertexCnt;
 
@@ -30,7 +33,7 @@ SSurface::SSurface(uint32_t vertexCnt)
 
 SSurface::~SSurface()
 {
-	d_->byteArrayPtr = nullptr;
+	d_->vertexDataPtr = nullptr;
 
 	delete[] d_->vertexDrawOrder;
 
@@ -73,14 +76,43 @@ void SSurface::setVertex(uint32_t index, const SVertex& vertex)
 	}
 }
 
-SByteArrayPtr SSurface::toByteArrayPtr()
+SByteArrayPtr SSurface::getVertexData()
 {
 	for (uint32_t i = 0; i < d_->vertexCnt; i++)
 	{
 		const SVertex &vertex = d_->vertices[i];
 		SPointF3D screenPos = vertex.getScreenPos();
-		d_->byteArrayPtr->writeData(i * SVertex::GetVertexSize(), &screenPos, sizeof(SPointF3D));
+		SPointF2D texturePos = vertex.getTexturePos();
+
+		d_->vertexDataPtr->writeData(i * SVertex::GetVertexSize(), &screenPos, sizeof(SPointF3D));
+		d_->vertexDataPtr->writeData(i * SVertex::GetVertexSize()+ sizeof(SPointF3D), &texturePos, sizeof(SPointF2D));
+
 	}
 
-	return d_->byteArrayPtr;
+	return d_->vertexDataPtr;
+}
+
+void SSurface::loadTextureFromResPack(const SString& resPath)
+{
+	d_->texture.loadFromResPack(resPath);
+}
+
+uint32_t SSurface::getTextureChannels() const
+{
+	return d_->texture.getChannels();
+}
+
+uint32_t SSurface::getTextureWidth() const
+{
+	return d_->texture.getImageWidth();
+}
+
+uint32_t SSurface::getTextureHeight() const
+{
+	return d_->texture.getImageHeight();
+}
+
+unsigned char* SSurface::getTextureData() const
+{
+	return d_->texture.getDataPtr();
 }

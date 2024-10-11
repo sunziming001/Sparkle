@@ -9,6 +9,7 @@ struct SSurfaceData_OpenGL
 	GLuint VBO = 0;
 	GLuint VAO = 0;
 	GLuint EBO = 0;
+	GLuint texture = 0;
 };
 
 struct SSurfaceRender_OpenGL::Data
@@ -42,12 +43,15 @@ void SSurfaceRender_OpenGL::onAdd(SSurfacePtr surface)
 	SSurfaceData_OpenGL surfaceData = { 0 };
 	if (surface)
 	{
-		byteArrPtr = surface->toByteArrayPtr();
+		byteArrPtr = surface->getVertexData();
 
 		glGenVertexArrays(1, &surfaceData.VAO);
 		glGenBuffers(1, &surfaceData.VBO);
 
 		glGenBuffers(1, &surfaceData.EBO);
+
+		glGenTextures(1, &surfaceData.texture);
+
 
 		// bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
 		glBindVertexArray(surfaceData.VAO);
@@ -58,11 +62,51 @@ void SSurfaceRender_OpenGL::onAdd(SSurfacePtr surface)
 
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, surfaceData.EBO);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, surface->getVertexDrawOrderSize(), surface->getVertexDrawOrder(), GL_STATIC_DRAW);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
 		glEnableVertexAttribArray(0);
+		glEnableVertexAttribArray(1);
 
 		// note that this is allowed, the call to glVertexAttribPointer registered VBO as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+
+		//texture
+		glBindTexture(GL_TEXTURE_2D, surfaceData.texture); // all upcoming GL_TEXTURE_2D operations now have effect on this texture object
+		// set the texture wrapping parameters
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	// set texture wrapping to GL_REPEAT (default wrapping method)
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		// set texture filtering parameters
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+		if (surface->getTextureChannels() == 3)
+		{
+			glTexImage2D(GL_TEXTURE_2D, 
+				0, 
+				GL_RGB, 
+				surface->getTextureWidth(), 
+				surface->getTextureHeight(),
+				0, 
+				GL_RGB, 
+				GL_UNSIGNED_BYTE, 
+				surface->getTextureData());
+			glGenerateMipmap(GL_TEXTURE_2D);
+		}
+		else if (surface->getTextureChannels() == 4)
+		{
+			glTexImage2D(GL_TEXTURE_2D,
+				0,
+				GL_RGBA,
+				surface->getTextureWidth(),
+				surface->getTextureHeight(),
+				0,
+				GL_RGBA,
+				GL_UNSIGNED_BYTE,
+				surface->getTextureData());
+			glGenerateMipmap(GL_TEXTURE_2D);
+		}
+
 
 		// You can unbind the VAO afterwards so other VAO calls won't accidentally modify this VAO, but this rarely happens. Modifying other
 		// VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
@@ -84,6 +128,8 @@ void SSurfaceRender_OpenGL::onRemove(SSurfacePtr surface)
 		glDeleteVertexArrays(1, &(iter->second.VAO));
 		glDeleteBuffers(1, &(iter->second.VBO));
 		glDeleteBuffers(1, &(iter->second.EBO));
+		glDeleteTextures(1, &(iter->second.texture));
+
 
 		d_->mapSurface2Data.erase(iter);
 	}
@@ -102,7 +148,7 @@ void SSurfaceRender_OpenGL::onRenderSurface(SSurfacePtr surface)
 	{
 		size_t drawOrderCnt = surface->getVertexDrawOrderCnt();
 		SSurfaceData_OpenGL& data = iter->second;
-		
+		glBindTexture(GL_TEXTURE_2D, data.texture);
 		glBindVertexArray(data.VAO);
 		//glDrawArrays(GL_TRIANGLES, 0, surface->getVertexCnt());
 		glDrawElements(GL_TRIANGLES, drawOrderCnt, GL_UNSIGNED_INT, 0);

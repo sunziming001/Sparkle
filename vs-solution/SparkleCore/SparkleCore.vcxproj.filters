@@ -96,6 +96,9 @@
     <ClInclude Include="..\..\include\SparkleCore\stb_image.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\SparkleCore\SImage.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\SparkleCore\SConfig.cpp">
@@ -147,6 +150,9 @@
       <Filter>源文件\res_pack</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\SparkleCore\stb_image.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\SparkleCore\SImage.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

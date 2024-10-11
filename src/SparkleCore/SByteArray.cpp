@@ -106,5 +106,10 @@ SByteArray& SByteArray::operator-=(size_t size)
 
 void SByteArray::cleanup()
 {
-	delete[] ptr_;
+	if (ptr_ != nullptr)
+	{
+		delete[] ptr_;
+		ptr_ = nullptr;
+	}
+	
 }

@@ -3,6 +3,7 @@
 struct SVertex::Data
 {
 	SPointF3D screenPos;
+	SPointF2D texturePos;
 };
 
 
@@ -12,10 +13,12 @@ SVertex::SVertex()
 
 }
 
-SVertex::SVertex(const SPointF3D& screenPos)
+SVertex::SVertex(const SPointF3D& screenPos,
+	const SPointF2D& texturePos)
 	:SVertex()
 {
 	setScreenPos(screenPos);
+	setTexturePos(texturePos);
 }
 
 
@@ -41,12 +44,22 @@ SPointF3D SVertex::getScreenPos() const
 	return d_->screenPos;
 }
 
+SPointF2D SVertex::getTexturePos() const
+{
+	return d_->texturePos;
+}
+
 void SVertex::setScreenPos(const SPointF3D& screenPos)
 {
 	d_->screenPos = screenPos;
 }
 
+void SVertex::setTexturePos(const SPointF2D& texturePos)
+{
+	d_->texturePos = texturePos;
+}
+
 size_t SVertex::GetVertexSize()
 {
-	return sizeof(SPointF3D);
+	return sizeof(SPointF3D)+sizeof(SPointF2D);
 }

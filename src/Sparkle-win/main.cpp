@@ -7,6 +7,7 @@
 #include "SLogger.h"
 #include <set>
 #include "SpkFileHelper.h"
+#include "SImage.h"
 
 int main(int argc, char** argv)
 {

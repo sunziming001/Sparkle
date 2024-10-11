@@ -165,6 +165,7 @@
     <ClInclude Include="..\..\include\SparkleCore\SCoreApplication.h" />
     <ClInclude Include="..\..\include\SparkleCore\SEvent.h" />
     <ClInclude Include="..\..\include\SparkleCore\SFlags.h" />
+    <ClInclude Include="..\..\include\SparkleCore\SImage.h" />
     <ClInclude Include="..\..\include\SparkleCore\SKeyEvent.h" />
     <ClInclude Include="..\..\include\SparkleCore\SLoggable.h" />
     <ClInclude Include="..\..\include\SparkleCore\SLogger.h" />
@@ -187,6 +188,7 @@
     <ClCompile Include="..\..\src\SparkleCore\SConfig.cpp" />
     <ClCompile Include="..\..\src\SparkleCore\SCoreApplication.cpp" />
     <ClCompile Include="..\..\src\SparkleCore\SEvent.cpp" />
+    <ClCompile Include="..\..\src\SparkleCore\SImage.cpp" />
     <ClCompile Include="..\..\src\SparkleCore\SKeyEvent.cpp" />
     <ClCompile Include="..\..\src\SparkleCore\SLogger.cpp" />
     <ClCompile Include="..\..\src\SparkleCore\SMouseMoveEvent.cpp" />

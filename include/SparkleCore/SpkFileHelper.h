@@ -6,7 +6,6 @@
 #include "SByteArray.h"
 
 
-
 class SPARKLE_API SpkFileHelper
 {
 private:
