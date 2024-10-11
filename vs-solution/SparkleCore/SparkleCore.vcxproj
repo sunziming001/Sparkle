@@ -176,6 +176,7 @@
     <ClInclude Include="..\..\include\SparkleCore\SString.h" />
     <ClInclude Include="..\..\include\SparkleCore\SSurface.h" />
     <ClInclude Include="..\..\include\SparkleCore\SSurfaceRender_OpenGL.h" />
+    <ClInclude Include="..\..\include\SparkleCore\stb_image.h" />
     <ClInclude Include="..\..\include\SparkleCore\SVertex.h" />
     <ClInclude Include="..\..\include\SparkleCore\SWindow.h" />
     <ClInclude Include="..\..\include\SparkleCore\SWindow_MS_OpenGL.h" />
@@ -194,6 +195,7 @@
     <ClCompile Include="..\..\src\SparkleCore\SString.cpp" />
     <ClCompile Include="..\..\src\SparkleCore\SSurface.cpp" />
     <ClCompile Include="..\..\src\SparkleCore\SSurfaceRender_OpenGL.cpp" />
+    <ClCompile Include="..\..\src\SparkleCore\stb_image.cpp" />
     <ClCompile Include="..\..\src\SparkleCore\SVertex.cpp" />
     <ClCompile Include="..\..\src\SparkleCore\SWindow.cpp" />
     <ClCompile Include="..\..\src\SparkleCore\SWindow_MS_OpenGL.cpp" />
