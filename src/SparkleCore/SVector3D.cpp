@@ -22,7 +22,7 @@ SString SVector3D::toLogString() const
 	SString ret = (SWS("SVector3D("));
 	(ret) << getX() << SWS(", ");
 	(ret) << getY() << SWS(", ");
-	(ret) << getZ() << SWS(", ");
+	(ret) << getZ();
 	(ret) << SWS(")");
 
 	return ret;

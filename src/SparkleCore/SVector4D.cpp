@@ -15,6 +15,18 @@ SVector4D::SVector4D()
 }
 
 
+SString SVector4D::toLogString() const
+{
+	SString ret = (SWS("SVector4D("));
+	(ret) << getX() << SWS(", ");
+	(ret) << getY() << SWS(", ");
+	(ret) << getZ() << SWS(", ");
+	(ret) << getW() ;
+	(ret) << SWS(")");
+
+	return ret;
+}
+
 SVector4D::~SVector4D()
 {
 	delete d_;
@@ -110,7 +122,7 @@ SVector4D& SVector4D::operator=(const SVector4D& v)
 }
 
 
-SVector4D SVector4D::operator+(const SVector4D& v)
+SVector4D SVector4D::operator+(const SVector4D& v)const
 {
 	SVector4D ret;
 	ret.setX(getX() + v.getX());
@@ -122,7 +134,7 @@ SVector4D SVector4D::operator+(const SVector4D& v)
 }
 
 
-SVector4D SVector4D::operator+(float factor)
+SVector4D SVector4D::operator+(float factor)const
 {
 	SVector4D ret;
 	ret.setX(getX() + factor);
@@ -133,7 +145,7 @@ SVector4D SVector4D::operator+(float factor)
 	return ret;
 }
 
-SVector4D SVector4D::operator-(const SVector4D& v)
+SVector4D SVector4D::operator-(const SVector4D& v)const
 {
 	SVector4D ret;
 	ret.setX(getX() - v.getX());
@@ -144,7 +156,7 @@ SVector4D SVector4D::operator-(const SVector4D& v)
 	return ret;
 }
 
-SVector4D SVector4D::operator-(float factor)
+SVector4D SVector4D::operator-(float factor)const
 {
 	SVector4D ret;
 	ret.setX(getX() - factor);
@@ -155,7 +167,7 @@ SVector4D SVector4D::operator-(float factor)
 	return ret;
 }
 
-SVector4D SVector4D::operator*(float factor)
+SVector4D SVector4D::operator*(float factor)const
 {
 	SVector4D ret;
 	ret.setX(getX() * factor);
@@ -166,7 +178,7 @@ SVector4D SVector4D::operator*(float factor)
 	return ret;
 }
 
-SVector4D SVector4D::operator/(float factor)
+SVector4D SVector4D::operator/(float factor)const
 {
 	SVector4D ret;
 	ret.setX(getX() / factor);
@@ -175,5 +187,68 @@ SVector4D SVector4D::operator/(float factor)
 	ret.setW(getW() / factor);
 
 	return ret;
+}
+
+
+SVector4D& SVector4D::operator/=(float v)
+{
+	getXRef() /= v;
+	getYRef() /= v;
+	getZRef() /= v;
+	getWRef() /= v;
+
+	return *this;
+}
+
+
+SVector4D& SVector4D::operator*=(float v)
+{
+	getXRef() *= v;
+	getYRef() *= v;
+	getZRef() *= v;
+	getWRef() *= v;
+
+	return *this;
+}
+
+SVector4D& SVector4D::operator-=(float v)
+{
+	getXRef() -= v;
+	getYRef() -= v;
+	getZRef() -= v;
+	getWRef() -= v;
+
+	return *this;
+}
+
+SVector4D& SVector4D::operator-=(const SVector4D& obj)
+{
+	getXRef() -= obj.getX();
+	getYRef() -= obj.getY();
+	getZRef() -= obj.getZ();
+	getWRef() -= obj.getW();
+
+	return *this;
+}
+
+SVector4D& SVector4D::operator+=(const SVector4D& obj)
+{
+	getXRef() += obj.getX();
+	getYRef() += obj.getY();
+	getZRef() += obj.getZ();
+	getWRef() += obj.getW();
+
+	return *this;
+}
+
+
+SVector4D& SVector4D::operator+=(float v)
+{
+	getXRef() += v;
+	getYRef() += v;
+	getZRef() += v;
+	getWRef() += v;
+
+	return *this;
 }
 

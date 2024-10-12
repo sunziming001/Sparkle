@@ -3,8 +3,9 @@
 
 #include "SConfig.h"
 #include "SPoint.h"
+#include "SLoggable.h"
 
-class SPARKLE_API SVector4D
+class SPARKLE_API SVector4D:public SLoggable
 {
 public:
 	SVector4D();
@@ -12,6 +13,8 @@ public:
 	SVector4D(float x, float y, float z, float w);
 	SVector4D(const SVector4D& v);
 	
+	SString toLogString()const override;
+
 	float getX()const;
 	float getY()const;
 	float getZ()const;
@@ -30,17 +33,23 @@ public:
 
 	SVector4D& operator=(const SVector4D& obj);
 
-	SVector4D operator+(const SVector4D& obj);
-	SVector4D operator+(float factor);
+	SVector4D operator+(const SVector4D& obj)const;
+	SVector4D operator+(float factor)const;
 
-	SVector4D operator-(const SVector4D& obj);
-	SVector4D operator-(float factor);
+	SVector4D operator-(const SVector4D& obj)const;
+	SVector4D operator-(float factor)const;
 
-	SVector4D operator*(float factor);
-	SVector4D operator/(float factor);
+	SVector4D operator*(float factor)const;
+	SVector4D operator/(float factor)const;
 
+	SVector4D& operator+=(const SVector4D& obj);
+	SVector4D& operator+=(float v);
 	
-	
+	SVector4D& operator-=(const SVector4D& obj);
+	SVector4D& operator-=(float v);
+
+	SVector4D& operator*=(float v);
+	SVector4D& operator/=(float v);
 private:
 	DECLARE_INNER_DATA(d_);
 };
