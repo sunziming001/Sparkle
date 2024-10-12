@@ -117,6 +117,9 @@
     <ClInclude Include="..\..\include\SparkleCore\SFloat.h">
       <Filter>头文件\math</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\SparkleCore\STransform.h">
+      <Filter>头文件\math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\SparkleCore\SConfig.cpp">
@@ -180,6 +183,12 @@
       <Filter>源文件\math</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\SparkleCore\SFloat.cpp">
+      <Filter>源文件\math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\SparkleCore\SMatrix4x4.cpp">
+      <Filter>源文件\math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\SparkleCore\STransform.cpp">
       <Filter>源文件\math</Filter>
     </ClCompile>
   </ItemGroup>

@@ -9,14 +9,19 @@
 #include "SpkFileHelper.h"
 #include "SImage.h"
 #include "SVector3D.h"
+#include "SMatrix4x4.h"
+#include "STransform.h"
 
 int main(int argc, char** argv)
 {
+	STransform trans;
+	SVector3D v(0, 1, 0);
+	SVector3D ret;
+	//trans.move(SVector3D(0, 1, 0));
+	trans.angleRotateZ(90);
 
-	SVector3D a(0, 1, 0);
-	SVector3D b(-1, 0, 0);
-	float angle = SVector3D::angle(a, b);
-
+	
+	ret = trans.calc(v).normalized();
 	SpkFileHelper::getInstance()->loadPackage(SWS("res.spk"));
 
 	SWindowConf conf = {
@@ -29,7 +34,6 @@ int main(int argc, char** argv)
 	SCoreApplication app(argc, argv);
 	SWindow_MS_OpenGL window(conf);
 
-	SInfo("Test") << SVector3D::crossProduct(a, b);
 	app.exec();
 
 	
