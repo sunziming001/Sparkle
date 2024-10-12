@@ -8,7 +8,7 @@
 class SPARKLE_API SLoggable
 {
 public:
-	virtual SStringPtr toLogString()const = 0;
+	virtual SString toLogString()const = 0;
 };
 
 

@@ -123,7 +123,7 @@ public:
 	SKeyStatus getStatus()const;
 	SKeyType getType()const;
 
-	SStringPtr toLogString()const override;
+	SString toLogString()const override;
 private:
 	DECLARE_INNER_DATA(d_);
 

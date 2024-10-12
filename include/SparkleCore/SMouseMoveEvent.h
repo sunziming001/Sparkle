@@ -12,7 +12,7 @@ public:
 	SMouseMoveEvent(int32_t x, int32_t y);
 	~SMouseMoveEvent();
 	SPoint2D getPos()const;
-	SStringPtr toLogString()const override;
+	SString toLogString()const override;
 private:
 	DECLARE_INNER_DATA(d_);
 };

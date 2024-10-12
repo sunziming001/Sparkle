@@ -31,6 +31,12 @@
     <Filter Include="源文件\res_pack">
       <UniqueIdentifier>{835e047e-35fe-42ca-9709-edc16f4c5ee0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\math">
+      <UniqueIdentifier>{1a3f249a-4b47-4037-8dd0-09c2dd94777d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\math">
+      <UniqueIdentifier>{b92241b9-a8e6-464b-85ef-148034acad15}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\SparkleCore\SSharedPtr.h">
@@ -99,6 +105,18 @@
     <ClInclude Include="..\..\include\SparkleCore\SImage.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\SparkleCore\SMatrix4x4.h">
+      <Filter>头文件\math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\SparkleCore\SVector4D.h">
+      <Filter>头文件\math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\SparkleCore\SVector3D.h">
+      <Filter>头文件\math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\SparkleCore\SFloat.h">
+      <Filter>头文件\math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\SparkleCore\SConfig.cpp">
@@ -154,6 +172,15 @@
     </ClCompile>
     <ClCompile Include="..\..\src\SparkleCore\SImage.cpp">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\SparkleCore\SVector4D.cpp">
+      <Filter>源文件\math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\SparkleCore\SVector3D.cpp">
+      <Filter>源文件\math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\SparkleCore\SFloat.cpp">
+      <Filter>源文件\math</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

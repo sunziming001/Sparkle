@@ -116,18 +116,18 @@ void SLoggerManager::writeLog(SLoggerLevel lv, const SString& line)
 	out << levelToString(lv);
 	out << SWS(" ");
 	out << line;
-
+	std::wstring wline = std::wstring(out.wc_str(), out.length());
 	if (lv <= d_->conf.maxLoggerLevel)
 	{
 		d_->outFileStream.open((wchar_t*)d_->conf.logPath.toByteArray().data(),
 			std::wofstream::app);
-		d_->outFileStream << (wchar_t*)out.toByteArray().data();;
-		d_->outFileStream << std::endl;
+		d_->outFileStream << wline;
+		d_->outFileStream << SWS("\n");
 		d_->outFileStream.close();
 	}
 	
 
-	std::cout<<(char*) out.toUtf8().data() << std::endl;
+	std::cout<<std::string((char*)out.toUtf8().data(), out.toUtf8().size()) << std::endl;
 }
 
 SString SLoggerManager::getFormatedTime(const wchar_t* format)
@@ -182,12 +182,12 @@ SLogger::~SLogger()
 {
 
 }
-
+/*
 SLogger& SLogger::operator<<(SStringPtr line)
 {
 	(*this) << (*line);
 	return *this;
-}
+}*/
 
 SLogger& SLogger::operator<<(const SString& line)
 {
@@ -197,6 +197,12 @@ SLogger& SLogger::operator<<(const SString& line)
 	tagLine << SWS("] ");
 	tagLine << line;
 	mgr->writeLog(lv_, tagLine);
+	return *this;
+}
+
+SLogger& SLogger::operator<<(const SLoggable& line)
+{
+	(*this) << line.toLogString();
 	return *this;
 }
 

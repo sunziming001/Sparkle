@@ -25,12 +25,12 @@ SEventType SEvent::getEventType() const
 	return d_->type;
 }
 
-SStringPtr SEvent::toLogString() const
+SString SEvent::toLogString() const
 {
-	SStringPtr ret = new SString(SWS("SEvent("));
-	(*ret) << EventTypeToString(d_->type);
-	(*ret) << SWS(")@");
-	(*ret) << d_->id;
+	SString ret = SWS("SEvent(");
+	(ret) << EventTypeToString(d_->type);
+	(ret) << SWS(")@");
+	(ret) << d_->id;
 
 	return ret;
 }

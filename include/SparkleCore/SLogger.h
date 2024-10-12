@@ -3,6 +3,7 @@
 
 #include "SConfig.h"
 #include "SString.h"
+#include "SLoggable.h"
 
 enum class SLoggerLevel
 {
@@ -50,8 +51,8 @@ class SPARKLE_API SLogger
 public:
 	SLogger(SLoggerLevel lv, const SString& tag);
 	~SLogger();
-	SLogger& operator<<(SStringPtr line);
 	SLogger& operator<<(const SString& line);
+	SLogger& operator<<(const SLoggable& line);
 private:
 	SLoggerLevel lv_;
 	SString tag_;

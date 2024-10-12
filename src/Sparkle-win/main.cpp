@@ -8,9 +8,14 @@
 #include <set>
 #include "SpkFileHelper.h"
 #include "SImage.h"
+#include "SVector3D.h"
 
 int main(int argc, char** argv)
 {
+
+	SVector3D a(0, 1, 0);
+	SVector3D b(-1, 0, 0);
+	float angle = SVector3D::angle(a, b);
 
 	SpkFileHelper::getInstance()->loadPackage(SWS("res.spk"));
 
@@ -23,6 +28,8 @@ int main(int argc, char** argv)
 
 	SCoreApplication app(argc, argv);
 	SWindow_MS_OpenGL window(conf);
+
+	SInfo("Test") << SVector3D::crossProduct(a, b);
 	app.exec();
 
 	

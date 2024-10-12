@@ -23,13 +23,13 @@ SPoint2D SMouseMoveEvent::getPos() const
 	return d_->pos;
 }
 
-SStringPtr SMouseMoveEvent::toLogString() const
+SString SMouseMoveEvent::toLogString() const
 {
-	SStringPtr ret = SEvent::toLogString();
-	(*ret) << SWS("{");
-	(*ret) << SWS("x: ") << d_->pos.x << SWS(", ");
-	(*ret) << SWS("y: ") << d_->pos.y << SWS(", ");
-	(*ret) << SWS("}");
+	SString ret = SEvent::toLogString();
+	(ret) << SWS("{");
+	(ret) << SWS("x: ") << d_->pos.x << SWS(", ");
+	(ret) << SWS("y: ") << d_->pos.y << SWS(", ");
+	(ret) << SWS("}");
 
 	return ret;
 }

@@ -48,16 +48,16 @@ SKeyType SKeyEvent::getType() const
 	return d_->type;
 }
 
-SStringPtr SKeyEvent::toLogString() const
+SString SKeyEvent::toLogString() const
 {
-	SStringPtr ret = SEvent::toLogString();
-	(*ret) << SWS("{");
-	(*ret) << "type: " << static_cast<uint32_t>(d_->type) << ";";
-	(*ret) << "key: " << static_cast<uint32_t>(d_->key) << ";";
-	(*ret) << "status: " << static_cast<uint32_t>(d_->status) << ";";
-	(*ret) << "modifiers: " << static_cast<uint32_t>(d_->modifiers.getValue()) << ";";
+	SString ret = SEvent::toLogString();
+	(ret) << SWS("{");
+	(ret) << "type: " << static_cast<uint32_t>(d_->type) << ";";
+	(ret) << "key: " << static_cast<uint32_t>(d_->key) << ";";
+	(ret) << "status: " << static_cast<uint32_t>(d_->status) << ";";
+	(ret) << "modifiers: " << static_cast<uint32_t>(d_->modifiers.getValue()) << ";";
 	
-	(*ret) << SWS("}");
+	(ret) << SWS("}");
 
 	return ret;
 }
